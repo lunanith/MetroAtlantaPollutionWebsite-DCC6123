@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Report a Bug</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html"><strong>ATL Pollution</strong></a>
+      <a href="education.html">Education</a>
+      <a href="data.html">Data & Map</a>
+      <a href="about.html">About</a>
+      <a href="report-bug.html">Report a Bug</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1>Report a Bug</h1>
+
+    <form id="bugForm" class="card">
+      <label>Issue Title</label>
+      <input type="text" required />
+
+      <label>Severity</label>
+      <select required>
+        <option value="">Select...</option>
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+      </select>
+
+      <label>Description</label>
+      <textarea rows="5" required></textarea>
+
+      <button type="submit">Submit</button>
+      <p id="status" class="small"></p>
+    </form>
+  </main>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

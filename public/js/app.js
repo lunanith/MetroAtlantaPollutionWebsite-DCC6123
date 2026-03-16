@@ -1,10 +1,19 @@
-console.log("ATL Pollution site loaded");
+console.log("MAP-USA loaded");
 
-document.addEventListener("submit", function (e) {
-  if (e.target.id === "bugForm") {
-    e.preventDefault();
-    document.getElementById("status").textContent =
-      "Thank you! Your report has been recorded.";
-    e.target.reset();
+document.addEventListener("DOMContentLoaded", function () {
+  const chatbotToggle = document.getElementById("chatbotToggle");
+  const chatbotPanel = document.getElementById("chatbotPanel");
+  const chatbotClose = document.getElementById("chatbotClose");
+
+  if (chatbotToggle && chatbotPanel) {
+    chatbotToggle.addEventListener("click", function () {
+      chatbotPanel.classList.toggle("open");
+    });
+  }
+
+  if (chatbotClose && chatbotPanel) {
+    chatbotClose.addEventListener("click", function () {
+      chatbotPanel.classList.remove("open");
+    });
   }
 });

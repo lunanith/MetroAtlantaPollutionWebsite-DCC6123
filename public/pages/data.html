@@ -3,33 +3,59 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Data & Map</title>
+  <title>Map | MAP-USA</title>
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
 <body>
-
   <nav>
     <div class="nav-inner">
-      <a href="../index.html"><strong>ATL Pollution</strong></a>
-      <a href="education.html">Education</a>
-      <a href="data.html">Data & Map</a>
-      <a href="about.html">About</a>
-      <a href="report-bug.html">Report a Bug</a>
+      <a class="brand" href="../index.html">MAP-USA</a>
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a class="active" href="data.html">Map</a>
+        <a href="about.html">About Us</a>
+        <a href="education.html">Education</a>
+      </div>
     </div>
   </nav>
 
   <main class="container">
-    <h1>Data & Map</h1>
+    <h1 class="page-title">Interactive Pollution Map</h1>
+    <p class="page-subtitle">
+      View pollution patterns geographically and explore air quality trends across monitored locations.
+    </p>
 
-    <div class="card">
-      <p class="small">Interactive ArcGIS map will appear below.</p>
+    <section class="section">
+      <div class="map-shell">
+        <img src="../assets/map-placeholder.jpg" alt="Map placeholder" />
+      </div>
+    </section>
+  </main>
+  <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open AI Assistant">✦</button>
 
-      <div style="height: 400px; border: 1px dashed #ccc; border-radius: 12px; display:flex; align-items:center; justify-content:center;">
-        Map placeholder
+  <div id="chatbotPanel" class="chatbot-panel">
+    <div class="chatbot-header">
+      <h3>AI Assistant</h3>
+      <button id="chatbotClose" class="chatbot-close" aria-label="Close chat">x</button>
+    </div>
+
+    <div class="chatbot-body">
+      <div class="chat-msg bot">
+        Hi! I'm the MAP-USA AI assistant. I can help explain pollution data, graphs, maps, and lesson content.
+      </div>
+      <div class="chat-msg bot">
+        Try asking something like: “What does PM2.5 mean?” or “Why might pollution be higher near highways?”
       </div>
     </div>
-  </main>
 
+    <div class="chatbot-input-wrap">
+      <input
+        class="chatbot-input"
+        type="text"
+        placeholder="Ask a question..."
+      />
+    </div>
+  </div>
   <script src="../js/app.js"></script>
 </body>
 </html>

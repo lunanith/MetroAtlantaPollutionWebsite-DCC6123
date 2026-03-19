@@ -5,6 +5,176 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About Us | MAP-USA</title>
   <link rel="stylesheet" href="../css/styles.css" />
+  <style>
+    .contact-section {
+      margin-top: 3rem;
+    }
+
+    .contact-section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+      color: #1a3a1a;
+    }
+
+    .contact-section .section-desc {
+      color: #555;
+      margin-bottom: 1.5rem;
+      font-size: 0.97rem;
+    }
+
+    .contact-form-card {
+      background: #fff;
+      border: 1px solid #c8e6c9;
+      border-radius: 12px;
+      padding: 2rem 2.5rem;
+      max-width: 680px;
+      box-shadow: 0 2px 12px rgba(76, 153, 85, 0.08);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #2e5c2e;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.01em;
+    }
+
+    .form-group label .required {
+      color: #c0392b;
+      margin-left: 2px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      border: 1.5px solid #b0cdb0;
+      border-radius: 7px;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.95rem;
+      color: #222;
+      background: #f9fdf9;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #4caf50;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.13);
+      background: #fff;
+    }
+
+    .form-group input.error,
+    .form-group select.error,
+    .form-group textarea.error {
+      border-color: #e74c3c;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+    }
+
+    .form-group .field-error {
+      color: #c0392b;
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .form-group .field-error.visible {
+      display: block;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .submit-btn {
+      background: #3a8a3a;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 0.7rem 2rem;
+      font-size: 0.97rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 0.3rem;
+    }
+
+    .submit-btn:hover {
+      background: #2e7230;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    .submit-btn:disabled {
+      background: #a5c8a5;
+      cursor: not-allowed;
+    }
+
+    #confirmationMsg {
+      display: none;
+      align-items: flex-start;
+      gap: 0.9rem;
+      background: #e8f5e9;
+      border: 1.5px solid #66bb6a;
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      max-width: 680px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    #confirmationMsg.show {
+      display: flex;
+    }
+
+    #confirmationMsg .confirm-text strong {
+      display: block;
+      color: #1b5e20;
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    #confirmationMsg .confirm-text span {
+      color: #2e7d32;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 580px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .contact-form-card {
+        padding: 1.4rem 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <nav>
@@ -25,6 +195,7 @@
       Learn more about our mission, the people behind the project, and why pollution education matters.
     </p>
 
+    <!-- ── Existing About Grid ── -->
     <section class="about-grid section">
       <div class="about-panel green card">
         <h2>Our Mission</h2>
@@ -63,7 +234,56 @@
         </p>
       </div>
     </section>
+
+    <section class="contact-section section">
+      <h2>Contact CSC-ATL</h2>
+      <p class="section-desc">Have a question, partnership inquiry, or feedback? Send us a message and we'll get back to you.</p>
+
+      <div class="contact-form-card">
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contactName">Name <span class="required">*</span></label>
+              <input type="text" id="contactName" name="name" placeholder="Your full name" autocomplete="name" />
+              <span class="field-error" id="nameError">Please enter your name.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail">Email <span class="required">*</span></label>
+              <input type="email" id="contactEmail" name="email" placeholder="you@example.com" autocomplete="email" />
+              <span class="field-error" id="emailError">Please enter a valid email address.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="contactSubject">Subject <span class="required">*</span></label>
+              <input type="text" id="contactSubject" name="subject" placeholder="What is this regarding?" />
+              <span class="field-error" id="subjectError">Please enter a subject.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="contactMessage">Message <span class="required">*</span></label>
+              <textarea id="contactMessage" name="message" placeholder="Write your message here..."></textarea>
+              <span class="field-error" id="messageError">Please enter a message.</span>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+        </form>
+      </div>
+
+      <div id="confirmationMsg" role="alert" aria-live="polite">
+        <div class="confirm-text">
+          <strong>Message sent successfully!</strong>
+          <span>Thank you for reaching out. The CSC-ATL team will get back to you as soon as possible.</span>
+        </div>
+      </div>
+    </section>
   </main>
+
   <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open AI Assistant">✦</button>
 
   <div id="chatbotPanel" class="chatbot-panel">
@@ -77,7 +297,7 @@
         Hi! I'm the MAP-USA AI assistant. I can help explain pollution data, graphs, maps, and lesson content.
       </div>
       <div class="chat-msg bot">
-        Try asking something like: “What does PM2.5 mean?” or “Why might pollution be higher near highways?”
+        Try asking something like: "What does PM2.5 mean?" or "Why might pollution be higher near highways?"
       </div>
     </div>
 
@@ -89,6 +309,94 @@
       />
     </div>
   </div>
+
   <script src="../js/app.js"></script>
+
+  <script>
+    (function () {
+      const form       = document.getElementById('contactForm');
+      const submitBtn  = document.getElementById('submitBtn');
+      const confirmMsg = document.getElementById('confirmationMsg');
+
+      const fields = [
+        {
+          input: document.getElementById('contactName'),
+          error: document.getElementById('nameError'),
+          validate: (v) => v.trim().length > 0,
+        },
+        {
+          input: document.getElementById('contactEmail'),
+          error: document.getElementById('emailError'),
+          validate: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+        },
+        {
+          input: document.getElementById('contactSubject'),
+          error: document.getElementById('subjectError'),
+          validate: (v) => v.trim().length > 0,
+        },
+        {
+          input: document.getElementById('contactMessage'),
+          error: document.getElementById('messageError'),
+          validate: (v) => v.trim().length > 0,
+        },
+      ];
+
+      fields.forEach(({ input, error }) => {
+        input.addEventListener('input', () => {
+          input.classList.remove('error');
+          error.classList.remove('visible');
+        });
+      });
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        let valid = true;
+        fields.forEach(({ input, error, validate }) => {
+          if (!validate(input.value)) {
+            input.classList.add('error');
+            error.classList.add('visible');
+            valid = false;
+          } else {
+            input.classList.remove('error');
+            error.classList.remove('visible');
+          }
+        });
+
+        if (!valid) return;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+
+        const payload = {
+          name:    document.getElementById('contactName').value.trim(),
+          email:   document.getElementById('contactEmail').value.trim(),
+          subject: document.getElementById('contactSubject').value.trim(),
+          message: document.getElementById('contactMessage').value.trim(),
+        };
+
+        try {
+          const response = await fetch('/api/contact', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(payload),
+          });
+
+          if (!response.ok) throw new Error('Server error');
+
+          form.reset();
+          confirmMsg.classList.add('show');
+          confirmMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        } catch (err) {
+          alert('Something went wrong sending your message. Please try again later.');
+          console.error('Contact form error:', err);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -30,9 +30,53 @@
       <div class="button-row">
         <a class="btn btn-primary" href="pages/data.html">Explore the Map</a>
         <a class="btn btn-secondary" href="pages/education.html">Open Education Portal</a>
+        <button type="button" class="btn btn-secondary" id="openBugReport">Report a Bug</button>
       </div>
     </div>
   </main>
+
+  <!-- Report a Bug modal -->
+  <div id="bugReportOverlay" class="bug-overlay" aria-hidden="true">
+    <div class="bug-modal" role="dialog" aria-modal="true" aria-labelledby="bugReportTitle">
+      <div class="bug-modal-header">
+        <h2 id="bugReportTitle">Report a Bug</h2>
+        <button type="button" class="bug-close" id="closeBugReport" aria-label="Close">x</button>
+      </div>
+      <p class="bug-modal-sub">
+        Found something broken or confusing? Let us know so we can fix it.
+      </p>
+      <form id="bugReportForm" class="bug-form" novalidate>
+        <label for="bugTitle">Issue title</label>
+        <input type="text" id="bugTitle" name="title" maxlength="200" required />
+        <div class="field-error" data-error-for="title"></div>
+
+        <label for="bugSeverity">Severity</label>
+        <select id="bugSeverity" name="severity" required>
+          <option value="">Select severity…</option>
+          <option value="low">Low — minor inconvenience</option>
+          <option value="medium">Medium — affects usability</option>
+          <option value="high">High — feature broken</option>
+          <option value="critical">Critical — site unusable</option>
+        </select>
+        <div class="field-error" data-error-for="severity"></div>
+
+        <label for="bugDescription">Description</label>
+        <textarea id="bugDescription" name="description" maxlength="5000" required
+          placeholder="What happened? What did you expect? Any steps to reproduce?"></textarea>
+        <div class="field-error" data-error-for="description"></div>
+
+        <label for="bugScreenshot">Screenshot (optional)</label>
+        <input type="file" id="bugScreenshot" name="screenshot" accept="image/*" />
+        <div class="field-error" data-error-for="screenshot"></div>
+
+        <div class="bug-form-actions">
+          <button type="submit" class="btn btn-primary" id="bugSubmitBtn">Submit Report</button>
+          <span class="status-text" id="bugStatusText"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open AI Assistant">✦</button>
 
   <div id="chatbotPanel" class="chatbot-panel">

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin | MAP-USA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a class="brand" href="../index.html">MAP-USA</a>
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="data.html">Map</a>
+        <a href="about.html">About Us</a>
+        <a href="education.html">Education</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Login view -->
+    <div id="loginView" class="form-card card" style="display: none;">
+      <h1 class="page-title" style="font-size: 2rem;">Admin Login</h1>
+      <p class="page-subtitle">Enter the admin password to view bug reports.</p>
+      <form id="loginForm" novalidate>
+        <label for="adminPassword">Password</label>
+        <input type="password" id="adminPassword" autocomplete="current-password" required />
+        <div class="bug-form-actions">
+          <button type="submit" class="btn btn-primary" id="loginBtn">Log In</button>
+          <span class="status-text" id="loginStatus"></span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Reports view -->
+    <div id="reportsView" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <h1 class="page-title" style="margin: 0;">Bug Reports</h1>
+        <button class="btn btn-secondary" id="logoutBtn" type="button">Log Out</button>
+      </div>
+      <p class="page-subtitle">
+        Reports submitted via the "Report a Bug" form on the homepage. Use the filter to focus on
+        open issues and update status as you work through them.
+      </p>
+
+      <div class="admin-toolbar">
+        <label for="statusFilter" style="margin: 0;">Filter:</label>
+        <select id="statusFilter">
+          <option value="all">All reports</option>
+          <option value="open">Open</option>
+          <option value="in_progress">In progress</option>
+          <option value="resolved">Resolved</option>
+        </select>
+        <button class="btn btn-secondary" id="refreshBtn" type="button">Refresh</button>
+        <span class="status-text" id="adminStatus"></span>
+      </div>
+
+      <div id="reportList" class="report-list">
+        <div class="empty-state">Loading reports…</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const loginView   = document.getElementById("loginView");
+    const reportsView = document.getElementById("reportsView");
+    const loginForm   = document.getElementById("loginForm");
+    const loginBtn    = document.getElementById("loginBtn");
+    const loginStatus = document.getElementById("loginStatus");
+    const passwordEl  = document.getElementById("adminPassword");
+    const logoutBtn   = document.getElementById("logoutBtn");
+
+    const listEl     = document.getElementById("reportList");
+    const filterEl   = document.getElementById("statusFilter");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const statusEl   = document.getElementById("adminStatus");
+
+    let allReports = [];
+
+    function escapeHtml(str) {
+      return String(str || "").replace(/[&<>"']/g, function (c) {
+        return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c];
+      });
+    }
+
+    function formatDate(iso) {
+      if (!iso) return "";
+      try { return new Date(iso).toLocaleString(); } catch (e) { return iso; }
+    }
+
+    function showLogin() {
+      loginView.style.display = "block";
+      reportsView.style.display = "none";
+      passwordEl.value = "";
+      passwordEl.focus();
+    }
+
+    function showReports() {
+      loginView.style.display = "none";
+      reportsView.style.display = "block";
+      loadReports();
+    }
+
+    async function checkAuth() {
+      try {
+        const res = await fetch("/api/admin/status", { credentials: "same-origin" });
+        const data = await res.json();
+        if (data.authenticated) showReports();
+        else showLogin();
+      } catch (err) {
+        showLogin();
+      }
+    }
+
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      loginStatus.textContent = "Signing in…";
+      loginStatus.className = "status-text";
+      loginBtn.disabled = true;
+      try {
+        const res = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "same-origin",
+          body: JSON.stringify({ password: passwordEl.value }),
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          loginStatus.textContent = "";
+          showReports();
+        } else {
+          loginStatus.textContent = data.error || "Login failed.";
+          loginStatus.className = "status-text error";
+        }
+      } catch (err) {
+        loginStatus.textContent = "Network error.";
+        loginStatus.className = "status-text error";
+      } finally {
+        loginBtn.disabled = false;
+      }
+    });
+
+    logoutBtn.addEventListener("click", async function () {
+      try {
+        await fetch("/api/admin/logout", { method: "POST", credentials: "same-origin" });
+      } catch (err) { /* ignore */ }
+      showLogin();
+    });
+
+    function render() {
+      const filter = filterEl.value;
+      const filtered = filter === "all"
+        ? allReports
+        : allReports.filter(function (r) { return r.status === filter; });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = '<div class="empty-state">No reports to display.</div>';
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(function (r) {
+        const screenshot = r.screenshot_url
+          ? '<a href="' + escapeHtml(r.screenshot_url) + '" target="_blank" rel="noopener">' +
+              '<img class="report-screenshot" src="' + escapeHtml(r.screenshot_url) + '" alt="Bug screenshot" />' +
+            '</a>'
+          : '';
+
+        return '' +
+          '<div class="report-card" data-id="' + escapeHtml(r.id) + '">' +
+            '<div class="report-card-header">' +
+              '<div>' +
+                '<h3>' + escapeHtml(r.title) + '</h3>' +
+                '<div class="report-meta">' +
+                  'ID: ' + escapeHtml(r.id) + ' • Submitted ' + escapeHtml(formatDate(r.submitted_at)) +
+                '</div>' +
+              '</div>' +
+              '<div>' +
+                '<span class="severity-badge severity-' + escapeHtml(r.severity) + '">' + escapeHtml(r.severity) + '</span> ' +
+                '<span class="status-badge status-' + escapeHtml(r.status) + '">' + escapeHtml(r.status.replace("_", " ")) + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<p class="report-description">' + escapeHtml(r.description) + '</p>' +
+            screenshot +
+            '<div class="report-actions">' +
+              '<select class="status-select">' +
+                '<option value="open"' +        (r.status === "open"        ? " selected" : "") + '>Open</option>' +
+                '<option value="in_progress"' + (r.status === "in_progress" ? " selected" : "") + '>In progress</option>' +
+                '<option value="resolved"' +    (r.status === "resolved"    ? " selected" : "") + '>Resolved</option>' +
+              '</select>' +
+              '<button class="btn btn-primary update-btn" type="button">Update Status</button>' +
+              '<button class="btn btn-danger delete-btn" type="button">Delete</button>' +
+            '</div>' +
+          '</div>';
+      }).join("");
+
+      listEl.querySelectorAll(".report-card").forEach(function (card) {
+        const id = card.getAttribute("data-id");
+        const select = card.querySelector(".status-select");
+        card.querySelector(".update-btn").addEventListener("click", function () {
+          updateStatus(id, select.value);
+        });
+        card.querySelector(".delete-btn").addEventListener("click", function () {
+          if (confirm("Delete this bug report? This cannot be undone.")) {
+            deleteReport(id);
+          }
+        });
+      });
+    }
+
+    async function loadReports() {
+      statusEl.textContent = "Loading…";
+      statusEl.className = "status-text";
+      try {
+        const res = await fetch("/api/bug-reports", { credentials: "same-origin" });
+        if (res.status === 401) { showLogin(); return; }
+        const data = await res.json();
+        if (data.success) {
+          allReports = data.reports || [];
+          statusEl.textContent = allReports.length + " total report" + (allReports.length === 1 ? "" : "s");
+          render();
+        } else {
+          listEl.innerHTML = '<div class="empty-state">Failed to load reports.</div>';
+          statusEl.textContent = "Error loading reports.";
+          statusEl.className = "status-text error";
+        }
+      } catch (err) {
+        listEl.innerHTML = '<div class="empty-state">Network error. Could not reach the server.</div>';
+        statusEl.textContent = "Network error.";
+        statusEl.className = "status-text error";
+      }
+    }
+
+    async function updateStatus(id, newStatus) {
+      try {
+        const res = await fetch("/api/bug-reports/" + encodeURIComponent(id), {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          credentials: "same-origin",
+          body: JSON.stringify({ status: newStatus }),
+        });
+        if (res.status === 401) { showLogin(); return; }
+        const data = await res.json();
+        if (data.success) await loadReports();
+        else alert("Update failed: " + (data.error || "unknown error"));
+      } catch (err) {
+        alert("Network error while updating.");
+      }
+    }
+
+    async function deleteReport(id) {
+      try {
+        const res = await fetch("/api/bug-reports/" + encodeURIComponent(id), {
+          method: "DELETE",
+          credentials: "same-origin",
+        });
+        if (res.status === 401) { showLogin(); return; }
+        const data = await res.json();
+        if (data.success) await loadReports();
+        else alert("Delete failed: " + (data.error || "unknown error"));
+      } catch (err) {
+        alert("Network error while deleting.");
+      }
+    }
+
+    filterEl.addEventListener("change", render);
+    refreshBtn.addEventListener("click", loadReports);
+
+    checkAuth();
+  </script>
+</body>
+</html>

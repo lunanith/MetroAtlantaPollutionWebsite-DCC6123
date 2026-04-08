@@ -1,2 +1,6 @@
 .env
 .venv
+data/
+public/uploads/
+__pycache__/
+*.pyc

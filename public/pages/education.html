@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Education | MAP-USA</title>
-  <link rel="stylesheet" href="../css/styles.css" />
+  <title>Learn | MAP-USA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
   <nav>
@@ -19,148 +21,938 @@
     </div>
   </nav>
 
-  <main class="container">
-    <section class="education-header">
-      <h1 class="page-title">Educational Portal</h1>
+  <main class="container education-page">
+    <header class="page-header fade-up">
+      <span class="eyebrow">Educational Module</span>
+      <h1>Understanding Air Pollution in Metro Atlanta</h1>
+      <p>
+        Explore four key topics to better understand local air pollution, how pollution data
+        changes over time, how mapping reveals neighborhood-level patterns, and how research
+        projects can turn local environmental data into inquiry and action.
+      </p>
+    </header>
+
+    <section class="topic-chips fade-up">
+      <button class="topic-chip topic-chip-button" type="button" onclick="goChapter(0)">
+        <div class="topic-chip-title">Air Pollution Basics</div>
+        <div class="topic-chip-desc">
+          Understand PM2.5, pollution sources, and why local air quality matters.
+        </div>
+      </button>
+
+      <button class="topic-chip topic-chip-button" type="button" onclick="goChapter(1)">
+        <div class="topic-chip-title">Graphs &amp; Trends</div>
+        <div class="topic-chip-desc">
+          Learn how to read trends, compare patterns, and interpret pollution data over time.
+        </div>
+      </button>
+
+      <button class="topic-chip topic-chip-button" type="button" onclick="goChapter(2)">
+        <div class="topic-chip-title">Mapping Pollution</div>
+        <div class="topic-chip-desc">
+          Explore how GIS visualizations show changes in air quality by location.
+        </div>
+      </button>
+
+      <button class="topic-chip topic-chip-button" type="button" onclick="goChapter(3)">
+        <div class="topic-chip-title">Research Projects</div>
+        <div class="topic-chip-desc">
+          Support inquiry-based learning through observation, questions, and data analysis.
+        </div>
+      </button>
     </section>
 
-    <section class="section education-hero card">
-      <div>
-        <h2>Learn About Air Pollution Through Real Data</h2>
-        <p>
-          Use this portal to connect pollution concepts with maps, graphs, and community-focused
-          environmental learning. Browse curated resources for both students and educators.
-        </p>
+    <section class="progress-wrap fade-up" aria-label="Learning progress">
+      <div class="progress-meta">
+        <span>Overall progress</span>
+        <span id="progressLabel">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
       </div>
     </section>
 
-    <section class="section">
-      <h2 class="section-title">Featured Learning Topics</h2>
-      <div class="topic-grid compact-topics">
-        <div class="topic-card card">
-          <h3>Air Pollution Basics</h3>
-          <p>Understand PM2.5, pollution sources, and why local air quality matters.</p>
+    <!-- Chapter 1 -->
+    <section class="chapter active" id="ch-0">
+      <div class="chapter-header">
+        <div>
+          <h2>Air Pollution Basics</h2>
+          <p>
+            Start with the foundations: what air pollution is, what kinds of pollutants people
+            are exposed to, and why local air quality matters for health, schools, and communities
+            in Metro Atlanta.
+          </p>
         </div>
+      </div>
 
-        <div class="topic-card card">
-          <h3>Graphs & Trends</h3>
-          <p>Learn how to read trends, compare patterns, and interpret pollution data over time.</p>
-        </div>
+      <p class="section-label">Core Concepts</p>
 
-        <div class="topic-card card">
-          <h3>Mapping Pollution</h3>
-          <p>Explore how GIS visualizations show changes in air quality by location.</p>
-        </div>
+      <div class="accordion">
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">What Counts as Air Pollution?</span>
+              <span class="acc-sub">Particles, gases, and why exposure is a public health issue</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                Air pollution refers to harmful substances in the air that can affect human health,
+                ecosystems, and quality of life. These substances include both particles and gases.
+                Some pollutants are emitted directly, such as vehicle exhaust or industrial emissions,
+                while others form later through chemical reactions in the atmosphere.
+              </p>
+              <p>
+                For communities, air pollution is not just an environmental topic. It is also a
+                public health issue because exposure can affect breathing, heart health, school
+                attendance, and long-term well-being. This makes local monitoring especially
+                important in places where traffic, industrial activity, and land use vary from
+                neighborhood to neighborhood.
+              </p>
+              <div class="stat-row">
+                <div class="stat-pill"><strong>Particles</strong><span>PM1, PM2.5, PM10</span></div>
+                <div class="stat-pill"><strong>Gases</strong><span>NO₂, O₃, CO, SO₂</span></div>
+                <div class="stat-pill"><strong>Exposure</strong><span>Health + environment</span></div>
+              </div>
+              <span class="source-chip">Source: U.S. EPA, Criteria Air Pollutants</span>
+            </div>
+          </div>
+        </article>
 
-        <div class="topic-card card">
-          <h3>Research Projects</h3>
-          <p>Support inquiry-based learning through observation, questions, and data analysis.</p>
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">Why PM2.5 Matters So Much</span>
+              <span class="acc-sub">Small particles, deeper lung penetration, stronger health risks</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <span class="danger-badge danger-high">High health concern</span>
+              <p>
+                PM2.5 refers to airborne particles that are 2.5 micrometers or smaller in diameter.
+                Because these particles are so small, they can travel deep into the lungs and contribute
+                to asthma attacks, inflammation, cardiovascular strain, and other chronic health risks.
+              </p>
+              <p>
+                PM2.5 often comes from combustion-related sources such as cars, trucks, power generation,
+                and smoke. In Metro Atlanta, PM2.5 is especially important because traffic corridors and
+                regional weather conditions can combine to produce noticeable differences in exposure
+                across time and place.
+              </p>
+              <div class="stat-row">
+                <div class="stat-pill"><strong>2.5 µm</strong><span>Very small particles</span></div>
+                <div class="stat-pill"><strong>Traffic</strong><span>Major local source</span></div>
+                <div class="stat-pill"><strong>Health</strong><span>Lungs + heart</span></div>
+              </div>
+              <span class="source-chip">Source: EPA PM2.5 Basics; CDC Air Pollution and Health</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">Why Local Air Quality Is Uneven</span>
+              <span class="acc-sub">Roads, weather, and neighborhood-level differences</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                Pollution is not distributed evenly. Communities near highways, heavy traffic,
+                industrial zones, or construction areas often face greater exposure than areas
+                farther away from those sources. Wind direction, temperature, and urban form can
+                also affect how pollution moves and where it settles.
+              </p>
+              <p>
+                This is one reason neighborhood-level data matters. Citywide averages can make air
+                quality seem moderate even when certain schools or residential areas are experiencing
+                much higher local exposure.
+              </p>
+              <div class="stat-row">
+                <div class="stat-pill"><strong>Highways</strong><span>Common hotspots</span></div>
+                <div class="stat-pill"><strong>Weather</strong><span>Affects movement</span></div>
+                <div class="stat-pill"><strong>Neighborhoods</strong><span>Not all the same</span></div>
+              </div>
+              <span class="source-chip">Source: WHO Air Quality Guidance; EPA Environmental Justice Screening Tools</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <section class="quiz-block" id="quiz-0">
+        <div class="quiz-block-header">
+          <h3>Quiz 1 · Air Pollution Basics</h3>
+          <span class="quiz-block-score" id="score-0"></span>
         </div>
+        <div class="quiz-block-body" id="qbody-0"></div>
+        <div class="quiz-result" id="qresult-0">
+          <div class="result-title" id="rtitle-0"></div>
+          <div class="result-msg" id="rmsg-0"></div>
+          <button class="restart-btn" type="button" onclick="restartQuiz(0)">Try Again</button>
+        </div>
+      </section>
+
+      <div class="chapter-nav">
+        <div></div>
+        <button class="nav-btn primary" type="button" onclick="goChapter(1)">Next: Graphs &amp; Trends</button>
       </div>
     </section>
 
-    <section class="section resource-layout cleaner-layout">
-      <div class="resource-group card">
-        <h2 class="section-title">For Teachers</h2>
-        <div class="resource-list">
-          <a class="resource-row" href="https://www.airnow.gov/education/teachers/facilitating-a-teacher-workshop/" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h3>Air Quality Workshop for Teachers</h3>
-              <p>Toolkit-style resource for introducing air quality concepts in the classroom.</p>
-            </div>
-            <span>↗</span>
-          </a>
-
-          <a class="resource-row" href="https://subjecttoclimate.org/teacher-guides/5-ways-to-teach-about-air-pollution" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h3>5 Ways to Teach About Air Pollution</h3>
-              <p>Classroom-friendly teaching ideas that make the topic more approachable.</p>
-            </div>
-            <span>↗</span>
-          </a>
-
-          <a class="resource-row" href="https://www.epa.gov/students/lesson-plans-teacher-guides-and-online-environmental-resources-educators" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h3>EPA Lesson Plans & Teacher Guides</h3>
-              <p>A broad collection of environmental lesson plans and classroom resources.</p>
-            </div>
-            <span>↗</span>
-          </a>
-
-          <a class="resource-row" href="https://www.baybackpack.com/blog/on-the-air-2020-a-curriculum-connecting-health-community-and-the-environment" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h3>On the Air 2020 Curriculum</h3>
-              <p>Curriculum connecting health, community, and the environment.</p>
-            </div>
-            <span>↗</span>
-          </a>
+    <!-- Chapter 2 -->
+    <section class="chapter" id="ch-1">
+      <div class="chapter-header">
+        <div>
+          <h2>Graphs &amp; Trends</h2>
+          <p>
+            Learn how to read pollution trends over time and make sense of changing values,
+            spikes, and repeated patterns in local air quality data.
+          </p>
         </div>
       </div>
 
-      <div class="resource-group card">
-        <h2 class="section-title">For Students</h2>
-        <div class="resource-list">
-          <a class="resource-row" href="https://airknowledge.gov/BASC-SI.html" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h3>Air Pollution Basics (BASC)</h3>
-              <p>Foundational educational material covering key air pollution concepts.</p>
-            </div>
-            <span>↗</span>
-          </a>
+      <p class="section-label">Reading Data Over Time</p>
 
-          <a class="resource-row" href="https://cleanaireacademy.org/" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h3>CleanAIRE Academy</h3>
-              <p>Searchable air quality learning content and educational materials.</p>
+      <div class="accordion">
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">What a Trend Line Actually Shows</span>
+              <span class="acc-sub">Change over time, not just isolated readings</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                A graph helps users see how pollution values change over time rather than focusing on
+                just one number. Trend lines are useful because they reveal whether conditions are
+                increasing, decreasing, or remaining relatively stable during a chosen period.
+              </p>
+              <p>
+                This matters for air quality because pollution often follows repeating rhythms linked
+                to commuting, weather, school schedules, or seasonal conditions. A graph allows people
+                to compare those rhythms and ask more meaningful questions.
+              </p>
+              <span class="source-chip">Source: AirNow Educational Materials; NOAA Data Literacy Resources</span>
             </div>
-            <span>↗</span>
-          </a>
+          </div>
+        </article>
+
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">How to Recognize Spikes and Repeated Patterns</span>
+              <span class="acc-sub">Rush hour, smoke events, construction, and recurring cycles</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                A spike is a sudden increase in pollution values. Some spikes are one-time events,
+                while others happen repeatedly and point to predictable causes. For example,
+                weekday traffic can create repeated morning and afternoon increases, while wildfire
+                smoke may cause a regional rise over a shorter period.
+              </p>
+              <p>
+                Interpreting spikes requires context. Looking at date, time, weather, and nearby
+                activities helps users move from “What happened?” to “Why might this have happened?”
+              </p>
+              <div class="stat-row">
+                <div class="stat-pill"><strong>Traffic</strong><span>Recurring pattern</span></div>
+                <div class="stat-pill"><strong>Smoke</strong><span>Regional event</span></div>
+                <div class="stat-pill"><strong>Construction</strong><span>Localized increase</span></div>
+              </div>
+              <span class="source-chip">Source: EPA Air Sensor Guidebook; PurpleAir Interpretation Guidance</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">Why Comparing Time Periods Matters</span>
+              <span class="acc-sub">Weekdays vs. weekends, seasons, and changing conditions</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                Comparison is what turns graphs into analysis. Looking across weekdays and weekends,
+                different months, or different schools can reveal whether patterns are tied to traffic,
+                weather, regional smoke, or local activity.
+              </p>
+              <p>
+                This helps students and educators use graphs not just as visual displays, but as tools
+                for building evidence and drawing conclusions.
+              </p>
+              <span class="source-chip">Source: Data Literacy Project; EPA Student Air Quality Resources</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <section class="quiz-block" id="quiz-1">
+        <div class="quiz-block-header">
+          <h3>Quiz 2 · Graphs &amp; Trends</h3>
+          <span class="quiz-block-score" id="score-1"></span>
+        </div>
+        <div class="quiz-block-body" id="qbody-1"></div>
+        <div class="quiz-result" id="qresult-1">
+          <div class="result-title" id="rtitle-1"></div>
+          <div class="result-msg" id="rmsg-1"></div>
+          <button class="restart-btn" type="button" onclick="restartQuiz(1)">Try Again</button>
+        </div>
+      </section>
+
+      <div class="chapter-nav">
+        <button class="nav-btn" type="button" onclick="goChapter(0)">Back: Air Pollution Basics</button>
+        <button class="nav-btn primary" type="button" onclick="goChapter(2)">Next: Mapping Pollution</button>
+      </div>
+    </section>
+
+    <!-- Chapter 3 -->
+    <section class="chapter" id="ch-2">
+      <div class="chapter-header">
+        <div>
+          <h2>Mapping Pollution</h2>
+          <p>
+            Understand how maps reveal spatial differences in air quality and why location matters
+            when interpreting environmental data.
+          </p>
+        </div>
+      </div>
+
+      <p class="section-label">Location and Patterns</p>
+
+      <div class="accordion">
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">Why Maps Matter for Air Quality</span>
+              <span class="acc-sub">Connecting data to roads, schools, and neighborhoods</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                Maps make pollution data easier to connect to real places. A graph may show that
+                pollution increased, but a map helps answer where that increase happened and which
+                nearby features might help explain it.
+              </p>
+              <p>
+                In educational settings, maps also make data more meaningful because students can relate
+                patterns to familiar schools, roads, parks, or neighborhoods.
+              </p>
+              <span class="source-chip">Source: ESRI GIS Education Resources; EPA Community Air Mapping Guidance</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">How GIS Reveals Pollution Hotspots</span>
+              <span class="acc-sub">Neighborhood differences, proximity, and spatial comparison</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                GIS allows users to compare data across locations and identify hotspots, meaning places
+                where pollution is consistently or unusually high. These hotspots are often associated
+                with major roads, industrial areas, and dense traffic corridors.
+              </p>
+              <p>
+                This makes spatial comparison especially useful for local air quality education because
+                it shows that one neighborhood’s experience may differ significantly from another’s.
+              </p>
+              <div class="stat-row">
+                <div class="stat-pill"><strong>Highways</strong><span>Frequent hotspots</span></div>
+                <div class="stat-pill"><strong>Schools</strong><span>Important comparison points</span></div>
+                <div class="stat-pill"><strong>GIS</strong><span>Shows where patterns happen</span></div>
+              </div>
+              <span class="source-chip">Source: ESRI Spatial Thinking Resources; EPA EJScreen</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">Why Local Mapping Supports Equity</span>
+              <span class="acc-sub">Seeing environmental differences more clearly</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                Broad averages can hide local inequality. Neighborhood-level mapping helps communities,
+                educators, and students see where pollution burdens may be concentrated and ask why those
+                differences exist.
+              </p>
+              <p>
+                This supports stronger questions about environmental justice, land use, transportation,
+                and public health. Local mapping does not solve those issues on its own, but it helps
+                make them visible.
+              </p>
+              <span class="source-chip">Source: EPA Environmental Justice Resources; WHO Urban Health Guidance</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <section class="quiz-block" id="quiz-2">
+        <div class="quiz-block-header">
+          <h3>Quiz 3 · Mapping Pollution</h3>
+          <span class="quiz-block-score" id="score-2"></span>
+        </div>
+        <div class="quiz-block-body" id="qbody-2"></div>
+        <div class="quiz-result" id="qresult-2">
+          <div class="result-title" id="rtitle-2"></div>
+          <div class="result-msg" id="rmsg-2"></div>
+          <button class="restart-btn" type="button" onclick="restartQuiz(2)">Try Again</button>
+        </div>
+      </section>
+
+      <div class="chapter-nav">
+        <button class="nav-btn" type="button" onclick="goChapter(1)">Back: Graphs &amp; Trends</button>
+        <button class="nav-btn primary" type="button" onclick="goChapter(3)">Next: Research Projects</button>
+      </div>
+    </section>
+
+    <!-- Chapter 4 -->
+    <section class="chapter" id="ch-3">
+      <div class="chapter-header">
+        <div>
+          <h2>Research Projects</h2>
+          <p>
+            Use air quality data to support inquiry, observation, comparison, and student-led research.
+          </p>
+        </div>
+      </div>
+
+      <p class="section-label">Inquiry and Investigation</p>
+
+      <div class="accordion">
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">What Makes a Good Research Question?</span>
+              <span class="acc-sub">Questions that can be explored with evidence</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                A good research question is specific, observable, and answerable with evidence.
+                For example, a student might ask whether weekday mornings show higher PM2.5 than
+                weekends near a school, or whether one location consistently records more spikes
+                than another.
+              </p>
+              <p>
+                Questions like these are useful because they invite comparison and make it easier
+                to connect claims to actual data rather than relying on assumptions.
+              </p>
+              <span class="source-chip">Source: National Science Teaching Association Inquiry Guidance</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">How to Use Graphs, Maps, and Context Together</span>
+              <span class="acc-sub">Combining multiple forms of evidence</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                Strong projects do not depend on one number alone. They combine evidence from graphs,
+                maps, dates, context, and nearby conditions such as traffic, weather, land use, or
+                school schedules.
+              </p>
+              <p>
+                This helps students support claims more clearly. For example, a graph may show a spike,
+                while a map and local context help explain whether that spike was likely linked to road
+                proximity, smoke, or another factor.
+              </p>
+              <span class="source-chip">Source: Data Literacy Project; NOAA Climate and Data Education Tools</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="acc-card">
+          <button class="acc-trigger" type="button">
+            <span class="acc-titles">
+              <span class="acc-title">Why Inquiry-Based Learning Matters</span>
+              <span class="acc-sub">From observation to explanation and community relevance</span>
+            </span>
+            <span class="acc-chevron">
+              <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 1l5 5 5-5" stroke="#1a3a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>
+                Inquiry-based learning encourages students to ask questions, interpret evidence,
+                develop claims, and reflect on uncertainty. Environmental data is especially useful
+                for this because it connects science to real community issues that students can see,
+                discuss, and investigate.
+              </p>
+              <p>
+                In a project setting, inquiry helps transform the module from passive reading into
+                active learning. Students begin to think like investigators, using local data to
+                understand their environment more deeply.
+              </p>
+              <span class="source-chip">Source: NSTA Inquiry-Based Learning; EPA Student Environmental Education Resources</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <section class="quiz-block" id="quiz-3">
+        <div class="quiz-block-header">
+          <h3>Quiz 4 · Research Projects</h3>
+          <span class="quiz-block-score" id="score-3"></span>
+        </div>
+        <div class="quiz-block-body" id="qbody-3"></div>
+        <div class="quiz-result" id="qresult-3">
+          <div class="result-title" id="rtitle-3"></div>
+          <div class="result-msg" id="rmsg-3"></div>
+          <button class="restart-btn" type="button" onclick="restartQuiz(3)">Try Again</button>
+        </div>
+      </section>
+
+      <div class="chapter-nav">
+        <button class="nav-btn" type="button" onclick="goChapter(2)">Back: Mapping Pollution</button>
+        <div></div>
+      </div>
+    </section>
+
+    <section class="completion-banner" id="completionBanner">
+      <h2>Module Complete</h2>
+      <div class="total-score" id="totalScoreDisplay"></div>
+      <p>
+        You have worked through all four topics in the MAP-USA education module and practiced using
+        concepts, trends, maps, and inquiry to better understand local air quality.
+      </p>
+    </section>
+
+    <section class="resources-section">
+      <div class="resources-header">
+        <span class="eyebrow">External Resources</span>
+        <h2>Keep Exploring</h2>
+        <p>Curated tools, curricula, and activities for deeper learning about air quality.</p>
+      </div>
+
+      <div class="res-cols">
+        <div class="res-col">
+          <h3 class="res-col-title">For Teachers</h3>
+          <div class="res-list">
+            <a class="res-item" href="https://www.epa.gov/air-quality-management-process/workshop-introduction-air-quality" target="_blank" rel="noopener">
+              <div class="res-item-text">
+                <div class="res-item-title">Air Quality Workshop for Teachers</div>
+                <div class="res-item-desc">Toolkit-style resource for introducing air quality concepts in the classroom.</div>
+              </div>
+              <div class="res-item-arrow">↗</div>
+            </a>
+
+            <a class="res-item" href="https://www.airnow.gov/education/teachers/" target="_blank" rel="noopener">
+              <div class="res-item-text">
+                <div class="res-item-title">5 Ways to Teach About Air Pollution</div>
+                <div class="res-item-desc">Classroom-friendly teaching ideas that make the topic more approachable.</div>
+              </div>
+              <div class="res-item-arrow">↗</div>
+            </a>
+
+            <a class="res-item" href="https://www.epa.gov/environmental-topics/air-topics" target="_blank" rel="noopener">
+              <div class="res-item-text">
+                <div class="res-item-title">EPA Lesson Plans &amp; Teacher Guides</div>
+                <div class="res-item-desc">A broad collection of environmental lesson plans and classroom resources.</div>
+              </div>
+              <div class="res-item-arrow">↗</div>
+            </a>
+          </div>
         </div>
 
-        <h2 class="section-title small-section-title">Downloads</h2>
-        <div class="resource-list">
-          <a class="resource-row" href="https://firebasestorage.googleapis.com/v0/b/map-usa-2de49.firebasestorage.app/o/pdf%2Fwhirling-swirling-air-pollution.pdf?alt=media&token=4444e8bd-c5f3-4d79-9440-0cfcbe15b3da" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h3>Whirling Swirling Air Pollution</h3>
-              <p>Hands-on downloadable activity.</p>
-            </div>
-            <span>↓</span>
-          </a>
+        <div class="res-col">
+          <h3 class="res-col-title">For Students</h3>
+          <div class="res-list">
+            <a class="res-item" href="https://www.epa.gov/indoor-air-quality-iaq/what-are-common-sources-indoor-air-pollution" target="_blank" rel="noopener">
+              <div class="res-item-text">
+                <div class="res-item-title">Air Pollution Basics</div>
+                <div class="res-item-desc">Foundational material covering key air pollution concepts.</div>
+              </div>
+              <div class="res-item-arrow">↗</div>
+            </a>
 
-          <a class="resource-row" href="https://firebasestorage.googleapis.com/v0/b/map-usa-2de49.firebasestorage.app/o/pdf%2Ffield-testing-for-ozone.pdf?alt=media&token=4279a089-0e07-4aee-91ae-dd7fc24cb9fb" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h3>Field Testing for Ozone</h3>
-              <p>Activity resource related to ozone testing and observation.</p>
-            </div>
-            <span>↓</span>
-          </a>
+            <a class="res-item" href="https://www.cleanairece.org/" target="_blank" rel="noopener">
+              <div class="res-item-text">
+                <div class="res-item-title">CleanAIRE Academy</div>
+                <div class="res-item-desc">Searchable air quality learning content and educational materials.</div>
+              </div>
+              <div class="res-item-arrow">↗</div>
+            </a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open AI Assistant">✦</button>
+  <script>
+    const CHAPTERS = [
+      { title: 'Air Pollution Basics' },
+      { title: 'Graphs & Trends' },
+      { title: 'Mapping Pollution' },
+      { title: 'Research Projects' }
+    ];
 
-  <div id="chatbotPanel" class="chatbot-panel">
-    <div class="chatbot-header">
-      <h3>AI Assistant</h3>
-      <button id="chatbotClose" class="chatbot-close" aria-label="Close chat">×</button>
-    </div>
+    const QUIZZES = [
+      [
+        {
+          q: "Why is PM2.5 considered especially important in air pollution studies?",
+          opts: [
+            "Because it is always visible in the air",
+            "Because it can travel deep into the lungs",
+            "Because it only appears near forests",
+            "Because it is larger than PM10"
+          ],
+          correct: 1,
+          feedback: "PM2.5 is especially important because its small size allows it to travel deep into the lungs and contribute to serious health risks."
+        },
+        {
+          q: "Which of the following is a common local source of air pollution in Atlanta?",
+          opts: [
+            "Rush-hour traffic",
+            "Ocean currents",
+            "Snow accumulation",
+            "Volcanic eruptions"
+          ],
+          correct: 0,
+          feedback: "Rush-hour traffic is a major local contributor to air pollution in Metro Atlanta."
+        },
+        {
+          q: "Why can two neighborhoods experience different pollution exposure?",
+          opts: [
+            "Because pollution stays evenly distributed everywhere",
+            "Because proximity to roads and industry can differ",
+            "Because air quality is controlled by zip code",
+            "Because pollution only affects downtown areas"
+          ],
+          correct: 1,
+          feedback: "Pollution exposure can differ because some neighborhoods are closer to highways, industry, or other pollution sources."
+        }
+      ],
+      [
+        {
+          q: "What does a trend line help show?",
+          opts: [
+            "Whether pollution is changing over time",
+            "Only the exact source of a pollutant",
+            "The legal status of each sensor",
+            "The color of the monitoring equipment"
+          ],
+          correct: 0,
+          feedback: "A trend line helps show whether pollution values are rising, falling, or staying relatively stable over time."
+        },
+        {
+          q: "What is a spike in pollution data?",
+          opts: [
+            "A permanent drop in pollution",
+            "A sudden increase in pollution values",
+            "An average of all yearly readings",
+            "A missing data point"
+          ],
+          correct: 1,
+          feedback: "A spike is a sudden increase in pollution values, often linked to traffic, smoke, construction, or weather conditions."
+        },
+        {
+          q: "Why compare data across weekdays and weekends?",
+          opts: [
+            "To make charts look more colorful",
+            "To see whether patterns change under different conditions",
+            "Because weekends always have worse pollution",
+            "Because weekday data is less accurate"
+          ],
+          correct: 1,
+          feedback: "Comparing weekdays and weekends helps reveal whether pollution patterns change under different conditions."
+        }
+      ],
+      [
+        {
+          q: "Why are maps useful for pollution education?",
+          opts: [
+            "They show where patterns happen in real places",
+            "They remove the need for data",
+            "They make every neighborhood look identical",
+            "They only work for indoor pollution"
+          ],
+          correct: 0,
+          feedback: "Maps help connect pollution patterns to real neighborhoods, schools, roads, and community spaces."
+        },
+        {
+          q: "What can GIS mapping help identify?",
+          opts: [
+            "Pollution hotspots near major roads",
+            "Only the age of a building",
+            "The brand of a sensor",
+            "Whether rainfall is popular"
+          ],
+          correct: 0,
+          feedback: "GIS mapping can help identify pollution hotspots, especially near highways, industrial areas, or other major sources."
+        },
+        {
+          q: "Why is neighborhood-level mapping important?",
+          opts: [
+            "Because broad averages can hide local differences",
+            "Because maps always replace graphs",
+            "Because national data is never useful",
+            "Because sensors only work in one place"
+          ],
+          correct: 0,
+          feedback: "Neighborhood-level mapping matters because broad averages can hide local differences and environmental inequality."
+        }
+      ],
+      [
+        {
+          q: "What makes a good research question?",
+          opts: [
+            "It is specific and can be explored with data",
+            "It has no clear focus",
+            "It ignores evidence",
+            "It cannot be measured or compared"
+          ],
+          correct: 0,
+          feedback: "A good research question is specific, observable, and testable with the available data."
+        },
+        {
+          q: "What can students use to support a claim in a research project?",
+          opts: [
+            "Only personal opinion",
+            "Graphs, maps, and contextual evidence",
+            "Random guesses",
+            "Only one isolated number"
+          ],
+          correct: 1,
+          feedback: "Strong projects use evidence from graphs, maps, and context such as traffic, weather, or nearby land use."
+        },
+        {
+          q: "Why is inquiry-based learning valuable here?",
+          opts: [
+            "It helps students ask questions and interpret real-world evidence",
+            "It removes the need for analysis",
+            "It only works in laboratory settings",
+            "It avoids local relevance"
+          ],
+          correct: 0,
+          feedback: "Inquiry-based learning helps students ask questions, interpret evidence, and connect data to real community issues."
+        }
+      ]
+    ];
 
-    <div class="chatbot-body">
-      <div class="chat-msg bot">
-        Hi! I can help explain air pollution concepts, classroom resources, graphs, and map data.
-      </div>
-      <div class="chat-msg bot">
-        Try asking: “What is PM2.5?” or “Which resource should I start with if I’m a teacher?”
-      </div>
-    </div>
+    const quizState = QUIZZES.map(qs => ({
+      answered: new Array(qs.length).fill(false),
+      score: 0
+    }));
 
-    <div class="chatbot-input-wrap">
-      <input class="chatbot-input" type="text" placeholder="Ask a question..." />
-    </div>
-  </div>
+    const totalQ = QUIZZES.reduce((sum, qs) => sum + qs.length, 0);
 
-  <script src="../js/app.js"></script>
+    function updateProgress() {
+      const done = quizState.reduce((sum, qs) => sum + qs.answered.filter(Boolean).length, 0);
+      const pct = Math.round((done / totalQ) * 100);
+
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressLabel').textContent = pct + '%';
+
+      if (done === totalQ) {
+        const totalScore = quizState.reduce((sum, qs) => sum + qs.score, 0);
+        document.getElementById('totalScoreDisplay').textContent = totalScore + ' / ' + totalQ;
+        document.getElementById('completionBanner').classList.add('show');
+      }
+    }
+
+    function goChapter(index) {
+      document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active'));
+      document.getElementById('ch-' + index).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function initAccordions() {
+      document.querySelectorAll('.acc-card').forEach(card => {
+        const button = card.querySelector('.acc-trigger');
+        const body = card.querySelector('.acc-body');
+
+        button.addEventListener('click', () => {
+          const isOpen = card.classList.toggle('open');
+
+          card.closest('.accordion').querySelectorAll('.acc-card').forEach(other => {
+            if (other !== card) {
+              other.classList.remove('open');
+              other.querySelector('.acc-body').style.maxHeight = '0';
+            }
+          });
+
+          body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0';
+        });
+      });
+    }
+
+    function buildQuiz(qi, questions) {
+      const body = document.getElementById('qbody-' + qi);
+      body.innerHTML = '';
+
+      questions.forEach((q, i) => {
+        const item = document.createElement('div');
+        item.className = 'q-item';
+
+        const options = q.opts.map((opt, j) => `
+          <button
+            class="option-btn"
+            type="button"
+            onclick="handleAnswer(${qi}, ${i}, ${j})"
+            id="opt-${qi}-${i}-${j}">
+            <span class="opt-dot">${String.fromCharCode(65 + j)}</span>
+            <span>${opt}</span>
+          </button>
+        `).join('');
+
+        item.innerHTML = `
+          <div class="q-num">Question ${i + 1} of ${questions.length}</div>
+          <div class="q-text">${q.q}</div>
+          <div class="options" id="opts-${qi}-${i}">${options}</div>
+          <div class="q-feedback" id="fb-${qi}-${i}"></div>
+        `;
+
+        body.appendChild(item);
+      });
+    }
+
+    function buildAllQuizzes() {
+      QUIZZES.forEach((questions, qi) => buildQuiz(qi, questions));
+    }
+
+    function handleAnswer(qi, i, oi) {
+      const state = quizState[qi];
+      if (state.answered[i]) return;
+
+      state.answered[i] = true;
+      const q = QUIZZES[qi][i];
+      const isCorrect = oi === q.correct;
+
+      if (isCorrect) state.score++;
+
+      const buttons = document.querySelectorAll('#opts-' + qi + '-' + i + ' .option-btn');
+      buttons.forEach(btn => btn.disabled = true);
+
+      buttons[oi].classList.add(isCorrect ? 'correct-ans' : 'wrong-ans');
+      if (!isCorrect) buttons[q.correct].classList.add('correct-ans');
+
+      const feedback = document.getElementById('fb-' + qi + '-' + i);
+      feedback.textContent = q.feedback;
+      feedback.className = 'q-feedback show ' + (isCorrect ? 'correct' : 'wrong');
+
+      const badge = document.getElementById('score-' + qi);
+      badge.style.display = 'inline-block';
+      badge.textContent = 'Score: ' + state.score + ' / ' + QUIZZES[qi].length;
+
+      if (state.answered.every(Boolean)) showQuizResult(qi);
+      updateProgress();
+    }
+
+    function showQuizResult(qi) {
+      const score = quizState[qi].score;
+      const total = QUIZZES[qi].length;
+      const title = document.getElementById('rtitle-' + qi);
+      const msg = document.getElementById('rmsg-' + qi);
+
+      if (score === total) {
+        title.textContent = 'Perfect';
+        msg.innerHTML = 'You got <strong>' + score + '/' + total + '</strong>. Excellent work.';
+      } else if (score >= Math.ceil(total / 2)) {
+        title.textContent = 'Good work';
+        msg.innerHTML = 'You scored <strong>' + score + '/' + total + '</strong>. Review any missed topics and keep going.';
+      } else {
+        title.textContent = 'Keep learning';
+        msg.innerHTML = 'You scored <strong>' + score + '/' + total + '</strong>. Revisit the module and try again.';
+      }
+
+      document.getElementById('qresult-' + qi).classList.add('show');
+    }
+
+    function restartQuiz(qi) {
+      quizState[qi].answered = new Array(QUIZZES[qi].length).fill(false);
+      quizState[qi].score = 0;
+
+      document.getElementById('qresult-' + qi).classList.remove('show');
+      document.getElementById('score-' + qi).style.display = 'none';
+
+      buildQuiz(qi, QUIZZES[qi]);
+      updateProgress();
+    }
+
+    initAccordions();
+    buildAllQuizzes();
+    updateProgress();
+  </script>
 </body>
 </html>

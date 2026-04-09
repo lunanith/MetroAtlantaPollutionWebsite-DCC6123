@@ -1,0 +1,202 @@
+<html>
+<head>
+<title>data.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d5b778;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bababa;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #56a8f5;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+data.html</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;!doctype </span><span class="s2">html</span><span class="s0">&gt;</span>
+<span class="s0">&lt;html </span><span class="s2">lang</span><span class="s3">=&quot;en&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;head&gt;</span>
+  <span class="s0">&lt;meta </span><span class="s2">charset</span><span class="s3">=&quot;utf-8&quot; </span><span class="s0">/&gt;</span>
+  <span class="s0">&lt;meta </span><span class="s2">name</span><span class="s3">=&quot;viewport&quot; </span><span class="s2">content</span><span class="s3">=&quot;width=device-width, initial-scale=1&quot; </span><span class="s0">/&gt;</span>
+  <span class="s0">&lt;title&gt;</span><span class="s1">Map | MAP-USA</span><span class="s0">&lt;/title&gt;</span>
+  <span class="s0">&lt;link </span><span class="s2">rel</span><span class="s3">=&quot;stylesheet&quot; </span><span class="s2">href</span><span class="s3">=&quot;../css/styles.css&quot; </span><span class="s0">/&gt;</span>
+  <span class="s0">&lt;script </span><span class="s2">type</span><span class="s3">=&quot;module&quot; </span><span class="s2">src</span><span class="s3">=&quot;https://js.arcgis.com/5.0/embeddable-components/&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+  <span class="s0">&lt;style&gt;</span>
+    <span class="s1">.</span><span class="s0">map-wrapper </span><span class="s1">{</span>
+      <span class="s2">width</span><span class="s1">: </span><span class="s4">100</span><span class="s1">%;</span>
+      <span class="s2">border-radius</span><span class="s1">: </span><span class="s4">12</span><span class="s3">px</span><span class="s1">;</span>
+      <span class="s2">overflow</span><span class="s1">: </span><span class="s3">hidden</span><span class="s1">;</span>
+      <span class="s2">border</span><span class="s1">: </span><span class="s4">1</span><span class="s3">px solid </span><span class="s5">#c8e6c9</span><span class="s1">;</span>
+      <span class="s2">box-shadow</span><span class="s1">: </span><span class="s4">0 2</span><span class="s3">px </span><span class="s4">12</span><span class="s3">px </span><span class="s0">rgba</span><span class="s1">(</span><span class="s4">76</span><span class="s1">, </span><span class="s4">153</span><span class="s1">, </span><span class="s4">85</span><span class="s1">, </span><span class="s4">0.08</span><span class="s1">);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">arcgis-embedded-map </span><span class="s1">{</span>
+      <span class="s2">width</span><span class="s1">: </span><span class="s4">100</span><span class="s1">%;</span>
+      <span class="s2">height</span><span class="s1">: </span><span class="s4">600</span><span class="s3">px</span><span class="s1">;</span>
+      <span class="s2">display</span><span class="s1">: </span><span class="s3">block</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">.</span><span class="s0">data-section </span><span class="s1">{</span>
+      <span class="s2">margin-top</span><span class="s1">: </span><span class="s4">3</span><span class="s3">rem</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">.</span><span class="s0">data-section h2 </span><span class="s1">{</span>
+      <span class="s2">font-size</span><span class="s1">: </span><span class="s4">1.6</span><span class="s3">rem</span><span class="s1">;</span>
+      <span class="s2">margin-bottom</span><span class="s1">: </span><span class="s4">0.4</span><span class="s3">rem</span><span class="s1">;</span>
+      <span class="s2">color</span><span class="s1">: </span><span class="s5">#1a3a1a</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">.</span><span class="s0">data-section </span><span class="s1">.</span><span class="s0">section-desc </span><span class="s1">{</span>
+      <span class="s2">color</span><span class="s1">: </span><span class="s5">#555</span><span class="s1">;</span>
+      <span class="s2">margin-bottom</span><span class="s1">: </span><span class="s4">1.5</span><span class="s3">rem</span><span class="s1">;</span>
+      <span class="s2">font-size</span><span class="s1">: </span><span class="s4">0.97</span><span class="s3">rem</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">.</span><span class="s0">csv-grid </span><span class="s1">{</span>
+      <span class="s2">display</span><span class="s1">: </span><span class="s3">grid</span><span class="s1">;</span>
+      <span class="s2">grid-template-columns</span><span class="s1">: </span><span class="s0">repeat</span><span class="s1">(</span><span class="s3">auto-fill</span><span class="s1">, </span><span class="s0">minmax</span><span class="s1">(</span><span class="s4">180</span><span class="s3">px</span><span class="s1">, </span><span class="s4">1</span><span class="s3">fr</span><span class="s1">));</span>
+      <span class="s2">gap</span><span class="s1">: </span><span class="s4">0.75</span><span class="s3">rem</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">.</span><span class="s0">csv-link </span><span class="s1">{</span>
+      <span class="s2">display</span><span class="s1">: </span><span class="s3">flex</span><span class="s1">;</span>
+      <span class="s2">align-items</span><span class="s1">: </span><span class="s3">center</span><span class="s1">;</span>
+      <span class="s2">gap</span><span class="s1">: </span><span class="s4">0.5</span><span class="s3">rem</span><span class="s1">;</span>
+      <span class="s2">background</span><span class="s1">: </span><span class="s5">#fff</span><span class="s1">;</span>
+      <span class="s2">border</span><span class="s1">: </span><span class="s4">1.5</span><span class="s3">px solid </span><span class="s5">#c8e6c9</span><span class="s1">;</span>
+      <span class="s2">border-radius</span><span class="s1">: </span><span class="s4">8</span><span class="s3">px</span><span class="s1">;</span>
+      <span class="s2">padding</span><span class="s1">: </span><span class="s4">0.6</span><span class="s3">rem </span><span class="s4">0.9</span><span class="s3">rem</span><span class="s1">;</span>
+      <span class="s2">font-size</span><span class="s1">: </span><span class="s4">0.88</span><span class="s3">rem</span><span class="s1">;</span>
+      <span class="s2">color</span><span class="s1">: </span><span class="s5">#2e5c2e</span><span class="s1">;</span>
+      <span class="s2">font-weight</span><span class="s1">: </span><span class="s4">600</span><span class="s1">;</span>
+      <span class="s2">text-decoration</span><span class="s1">: </span><span class="s3">none</span><span class="s1">;</span>
+      <span class="s2">transition</span><span class="s1">: </span><span class="s3">background </span><span class="s4">0.2</span><span class="s3">s</span><span class="s1">, </span><span class="s3">border-color </span><span class="s4">0.2</span><span class="s3">s</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">.</span><span class="s0">csv-link</span><span class="s1">:</span><span class="s0">hover </span><span class="s1">{</span>
+      <span class="s2">background</span><span class="s1">: </span><span class="s5">#e8f5e9</span><span class="s1">;</span>
+      <span class="s2">border-color</span><span class="s1">: </span><span class="s5">#4caf50</span><span class="s1">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">.</span><span class="s0">csv-link </span><span class="s1">.</span><span class="s0">csv-icon </span><span class="s1">{</span>
+      <span class="s2">font-size</span><span class="s1">: </span><span class="s4">1</span><span class="s3">rem</span><span class="s1">;</span>
+      <span class="s2">flex-shrink</span><span class="s1">: </span><span class="s4">0</span><span class="s1">;</span>
+    <span class="s1">}</span>
+  <span class="s0">&lt;/style&gt;</span>
+<span class="s0">&lt;/head&gt;</span>
+<span class="s0">&lt;body&gt;</span>
+  <span class="s0">&lt;nav&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;nav-inner&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;brand&quot; </span><span class="s2">href</span><span class="s3">=&quot;../index.html&quot;</span><span class="s0">&gt;</span><span class="s1">MAP-USA</span><span class="s0">&lt;/a&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;nav-links&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">href</span><span class="s3">=&quot;../index.html&quot;</span><span class="s0">&gt;</span><span class="s1">Home</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;active&quot; </span><span class="s2">href</span><span class="s3">=&quot;data.html&quot;</span><span class="s0">&gt;</span><span class="s1">Map</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">href</span><span class="s3">=&quot;about.html&quot;</span><span class="s0">&gt;</span><span class="s1">About Us</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">href</span><span class="s3">=&quot;education.html&quot;</span><span class="s0">&gt;</span><span class="s1">Education</span><span class="s0">&lt;/a&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+  <span class="s0">&lt;/nav&gt;</span>
+
+  <span class="s0">&lt;main </span><span class="s2">class</span><span class="s3">=&quot;container&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;h1 </span><span class="s2">class</span><span class="s3">=&quot;page-title&quot;</span><span class="s0">&gt;</span><span class="s1">Interactive Pollution Map</span><span class="s0">&lt;/h1&gt;</span>
+    <span class="s0">&lt;p </span><span class="s2">class</span><span class="s3">=&quot;page-subtitle&quot;</span><span class="s0">&gt;</span>
+      <span class="s1">View pollution patterns geographically and explore air quality trends across monitored locations.</span>
+    <span class="s0">&lt;/p&gt;</span>
+
+    <span class="s0">&lt;section </span><span class="s2">class</span><span class="s3">=&quot;section&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;map-wrapper&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;arcgis-embedded-map</span>
+          <span class="s2">style</span><span class="s3">=&quot;</span><span class="s2">height</span><span class="s1">:</span><span class="s4">600</span><span class="s3">px</span><span class="s1">;</span><span class="s2">width</span><span class="s1">:</span><span class="s4">100</span><span class="s1">%;</span><span class="s3">&quot;</span>
+          <span class="s2">item-id</span><span class="s3">=&quot;7b941d9e49964db49149b3689284c2e2&quot;</span>
+          <span class="s2">theme</span><span class="s3">=&quot;light&quot;</span>
+          <span class="s2">heading-enabled</span>
+          <span class="s2">legend-enabled</span>
+          <span class="s2">basemap-gallery-enabled</span>
+          <span class="s2">time-zone-label-enabled</span>
+          <span class="s2">center</span><span class="s3">=&quot;-83.9933927729223,32.14553492842535&quot;</span>
+          <span class="s2">scale</span><span class="s3">=&quot;4622324.434309&quot;</span>
+          <span class="s2">portal-url</span><span class="s3">=&quot;https://jchsci.maps.arcgis.com&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;/arcgis-embedded-map&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/section&gt;</span>
+
+    <span class="s0">&lt;section </span><span class="s2">class</span><span class="s3">=&quot;data-section section&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;h2&gt;</span><span class="s1">Raw Sensor Data</span><span class="s0">&lt;/h2&gt;</span>
+      <span class="s0">&lt;p </span><span class="s2">class</span><span class="s3">=&quot;section-desc&quot;</span><span class="s0">&gt;</span>
+        <span class="s1">Download raw CSV files from the PurpleAir sensor at Maynard Holbrook Jackson High School.</span>
+        <span class="s1">Each file contains air quality readings recorded every 2 minutes for that day.</span>
+      <span class="s0">&lt;/p&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;csv-grid&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20240531.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 31, 2024</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250414.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 14, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250415.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 15, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250416.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 16, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250417.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 17, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250418.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 18, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250419.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 19, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250420.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 20, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250421.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 21, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250422.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 22, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250423.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 23, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250424.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 24, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250425.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 25, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250426.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 26, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250427.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 27, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250428.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 28, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250429.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 29, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250430.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">Apr 30, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250501.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 1, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250502.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 2, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250503.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 3, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250504.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 4, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250505.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 5, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250506.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 6, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250507.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 7, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250508.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 8, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250509.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 9, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250510.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 10, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250511.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 11, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250512.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 12, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250513.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 13, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250514.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 14, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250515.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 15, 2025</span><span class="s0">&lt;/a&gt;</span>
+        <span class="s0">&lt;a </span><span class="s2">class</span><span class="s3">=&quot;csv-link&quot; </span><span class="s2">href</span><span class="s3">=&quot;../data/20250516.csv&quot; </span><span class="s2">download</span><span class="s0">&gt; </span><span class="s1">May 16, 2025</span><span class="s0">&lt;/a&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/section&gt;</span>
+  <span class="s0">&lt;/main&gt;</span>
+
+  <span class="s0">&lt;button </span><span class="s2">id</span><span class="s3">=&quot;chatbotToggle&quot; </span><span class="s2">class</span><span class="s3">=&quot;chatbot-toggle&quot; </span><span class="s2">aria-label</span><span class="s3">=&quot;Open AI Assistant&quot;</span><span class="s0">&gt;</span><span class="s1">✦</span><span class="s0">&lt;/button&gt;</span>
+
+  <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;chatbotPanel&quot; </span><span class="s2">class</span><span class="s3">=&quot;chatbot-panel&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;chatbot-header&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;h3&gt;</span><span class="s1">AI Assistant</span><span class="s0">&lt;/h3&gt;</span>
+      <span class="s0">&lt;button </span><span class="s2">id</span><span class="s3">=&quot;chatbotClose&quot; </span><span class="s2">class</span><span class="s3">=&quot;chatbot-close&quot; </span><span class="s2">aria-label</span><span class="s3">=&quot;Close chat&quot;</span><span class="s0">&gt;</span><span class="s1">x</span><span class="s0">&lt;/button&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;chatbot-body&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;chat-msg bot&quot;</span><span class="s0">&gt;</span>
+        <span class="s1">Hi! I'm the MAP-USA AI assistant. I can help explain pollution data, graphs, maps, and lesson content.</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;chat-msg bot&quot;</span><span class="s0">&gt;</span>
+        <span class="s1">Try asking something like: &quot;What does PM2.5 mean?&quot; or &quot;Why might pollution be higher near highways?&quot;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;chatbot-input-wrap&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;input</span>
+        <span class="s2">class</span><span class="s3">=&quot;chatbot-input&quot;</span>
+        <span class="s2">type</span><span class="s3">=&quot;text&quot;</span>
+        <span class="s2">placeholder</span><span class="s3">=&quot;Ask a question...&quot;</span>
+      <span class="s0">/&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+  <span class="s0">&lt;/div&gt;</span>
+
+  <span class="s0">&lt;script </span><span class="s2">src</span><span class="s3">=&quot;../js/app.js&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+<span class="s0">&lt;/body&gt;</span>
+<span class="s0">&lt;/html&gt;</span></pre>
+</body>
+</html>

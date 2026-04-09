@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ===== Report a Bug modal =====
   const openBtn   = document.getElementById("openBugReport");
   const closeBtn  = document.getElementById("closeBugReport");
   const overlay   = document.getElementById("bugReportOverlay");

@@ -1627,3 +1627,41 @@ textarea {
   align-items: center;
   gap: 10px;
 }
+
+/* Admin Toolbar */
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.admin-toolbar label {
+  font-weight: 700;
+  margin: 0;
+}
+
+.admin-toolbar select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: white;
+  font: inherit;
+}
+
+/* Report Actions */
+.report-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.report-actions select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: white;
+  font: inherit;
+}

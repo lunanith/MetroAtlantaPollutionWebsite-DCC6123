@@ -4,3 +4,4 @@ data/
 public/uploads/
 __pycache__/
 *.pycfirebase-credentials.json
+firebase-credentials.json

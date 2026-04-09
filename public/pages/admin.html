@@ -161,11 +161,7 @@
       }
 
       listEl.innerHTML = filtered.map(function (r) {
-        const screenshot = r.screenshot_url
-          ? '<a href="' + escapeHtml(r.screenshot_url) + '" target="_blank" rel="noopener">' +
-              '<img class="report-screenshot" src="' + escapeHtml(r.screenshot_url) + '" alt="Bug screenshot" />' +
-            '</a>'
-          : '';
+        const screenshot = '';
 
         return '' +
           '<div class="report-card" data-id="' + escapeHtml(r.id) + '">' +

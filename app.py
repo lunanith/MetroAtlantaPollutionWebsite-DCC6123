@@ -12,13 +12,24 @@ import hmac
 import json
 import uuid
 import secrets
-from datetime import datetime
+from datetime import datetime, timezone
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 load_dotenv()
 
+
+FIREBASE_CREDENTIALS_PATH = os.getenv("FIREBASE_CREDENTIALS_PATH")
+if FIREBASE_CREDENTIALS_PATH:
+    cred = credentials.Certificate(FIREBASE_CREDENTIALS_PATH)
+    firebase_admin.initialize_app(cred)
+    db = firestore.client()
+    USE_FIREBASE = True
+else:
+    USE_FIREBASE = False
+
 app = Flask(__name__, static_folder="public", static_url_path="")
-# Secret key for signing session cookies. In production set FLASK_SECRET_KEY in .env;
-# falls back to a random per-process key for dev (sessions reset on restart).
+
 app.secret_key = os.getenv("FLASK_SECRET_KEY") or secrets.token_hex(32)
 CORS(app, supports_credentials=True)
 
@@ -53,18 +64,28 @@ os.makedirs(SCREENSHOTS_DIR, exist_ok=True)
 
 
 def _load_bug_reports():
-    if not os.path.exists(BUG_REPORTS_FILE):
-        return []
+    if not USE_FIREBASE:
+        if not os.path.exists(BUG_REPORTS_FILE):
+            return []
+        try:
+            with open(BUG_REPORTS_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, OSError):
+            return []
+    
     try:
-        with open(BUG_REPORTS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (json.JSONDecodeError, OSError):
+        reports_ref = db.collection('bug_reports')
+        docs = reports_ref.order_by('submitted_at', direction=firestore.Query.DESCENDING).stream()
+        return [doc.to_dict() for doc in docs]
+    except Exception as e:
+        print(f"Firebase error: {e}")
         return []
 
 
 def _save_bug_reports(reports):
-    with open(BUG_REPORTS_FILE, "w", encoding="utf-8") as f:
-        json.dump(reports, f, indent=2)
+    if not USE_FIREBASE:
+        with open(BUG_REPORTS_FILE, "w", encoding="utf-8") as f:
+            json.dump(reports, f, indent=2)
 
 
 def _allowed_image(filename):
@@ -152,45 +173,31 @@ def report_bug():
     if severity not in ALLOWED_SEVERITY:
         errors["severity"] = "Severity must be one of: low, medium, high, critical."
 
-    # Optional screenshot
-    screenshot_url = None
-    screenshot_file = request.files.get("screenshot")
-    if screenshot_file and screenshot_file.filename:
-        if not _allowed_image(screenshot_file.filename):
-            errors["screenshot"] = "Screenshot must be PNG, JPG, JPEG, GIF, or WEBP."
-        else:
-            screenshot_file.seek(0, os.SEEK_END)
-            size_mb = screenshot_file.tell() / (1024 * 1024)
-            screenshot_file.seek(0)
-            if size_mb > MAX_SCREENSHOT_MB:
-                errors["screenshot"] = f"Screenshot must be under {MAX_SCREENSHOT_MB} MB."
-
     if errors:
         return jsonify({"success": False, "errors": errors}), 400
 
     report_id = uuid.uuid4().hex[:12]
-
-    if screenshot_file and screenshot_file.filename and "screenshot" not in errors:
-        ext = screenshot_file.filename.rsplit(".", 1)[1].lower()
-        safe_name = secure_filename(f"{report_id}.{ext}")
-        save_path = os.path.join(SCREENSHOTS_DIR, safe_name)
-        screenshot_file.save(save_path)
-        # URL relative to static_folder ("public")
-        screenshot_url = f"/uploads/bug_screenshots/{safe_name}"
 
     report = {
         "id": report_id,
         "title": title,
         "description": description,
         "severity": severity,
-        "screenshot_url": screenshot_url,
         "status": "open",
-        "submitted_at": datetime.utcnow().isoformat() + "Z",
+        "submitted_at": datetime.now(timezone.utc).isoformat(),
     }
 
-    reports = _load_bug_reports()
-    reports.append(report)
-    _save_bug_reports(reports)
+    if USE_FIREBASE:
+        try:
+            db.collection('bug_reports').document(report_id).set(report)
+        except Exception as e:
+            print(f"Firebase save error: {e}")
+            return jsonify({"success": False, "error": "Failed to save report"}), 500
+    else:
+        reports = _load_bug_reports()
+        reports.append(report)
+        _save_bug_reports(reports)
+
 
     # Best-effort admin email notification (won't fail the request if email is down)
     if SENDER_EMAIL and SENDER_PASSWORD and RECIPIENT_EMAIL:
@@ -210,8 +217,6 @@ Submitted:  {report['submitted_at']}
 
 Description:
 {description}
-
-Screenshot: {screenshot_url or '(none)'}
 
 View all reports on the admin page.
             """.strip()
@@ -235,8 +240,7 @@ View all reports on the admin page.
 def list_bug_reports():
     """Returns all bug reports for the admin page (newest first)."""
     reports = _load_bug_reports()
-    reports_sorted = sorted(reports, key=lambda r: r.get("submitted_at", ""), reverse=True)
-    return jsonify({"success": True, "reports": reports_sorted}), 200
+    return jsonify({"success": True, "reports": reports}), 200
 
 
 @app.route("/api/bug-reports/<report_id>", methods=["PATCH"])
@@ -252,43 +256,57 @@ def update_bug_report(report_id):
             "error": "Status must be one of: open, in_progress, resolved.",
         }), 400
 
-    reports = _load_bug_reports()
-    found = None
-    for r in reports:
-        if r.get("id") == report_id:
-            r["status"] = new_status
-            found = r
-            break
+    if USE_FIREBASE:
+        try:
+            doc_ref = db.collection('bug_reports').document(report_id)
+            doc_ref.update({"status": new_status})
+            # Get the updated document
+            updated_doc = doc_ref.get()
+            if updated_doc.exists:
+                return jsonify({"success": True, "report": updated_doc.to_dict()}), 200
+            else:
+                return jsonify({"success": False, "error": "Report not found."}), 404
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+    else:
+        reports = _load_bug_reports()
+        found = None
+        for r in reports:
+            if r.get("id") == report_id:
+                r["status"] = new_status
+                found = r
+                break
 
-    if not found:
-        return jsonify({"success": False, "error": "Report not found."}), 404
+        if not found:
+            return jsonify({"success": False, "error": "Report not found."}), 404
 
-    _save_bug_reports(reports)
-    return jsonify({"success": True, "report": found}), 200
+        _save_bug_reports(reports)
+        return jsonify({"success": True, "report": found}), 200
 
 
 @app.route("/api/bug-reports/<report_id>", methods=["DELETE"])
 @admin_required
 def delete_bug_report(report_id):
     """Delete a bug report (and its screenshot, if any)."""
-    reports = _load_bug_reports()
-    remaining = [r for r in reports if r.get("id") != report_id]
-    if len(remaining) == len(reports):
-        return jsonify({"success": False, "error": "Report not found."}), 404
+    if USE_FIREBASE:
+        try:
+            doc_ref = db.collection('bug_reports').document(report_id)
+            doc = doc_ref.get()
+            if not doc.exists:
+                return jsonify({"success": False, "error": "Report not found."}), 404
+            
+            doc_ref.delete()
+            return jsonify({"success": True}), 200
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+    else:
+        reports = _load_bug_reports()
+        remaining = [r for r in reports if r.get("id") != report_id]
+        if len(remaining) == len(reports):
+            return jsonify({"success": False, "error": "Report not found."}), 404
 
-    # Best-effort screenshot cleanup
-    deleted = next((r for r in reports if r.get("id") == report_id), None)
-    if deleted and deleted.get("screenshot_url"):
-        fname = os.path.basename(deleted["screenshot_url"])
-        fpath = os.path.join(SCREENSHOTS_DIR, fname)
-        if os.path.exists(fpath):
-            try:
-                os.remove(fpath)
-            except OSError:
-                pass
-
-    _save_bug_reports(remaining)
-    return jsonify({"success": True}), 200
+        _save_bug_reports(remaining)
+        return jsonify({"success": True}), 200
 
 
 @app.route("/api/admin/login", methods=["POST"])

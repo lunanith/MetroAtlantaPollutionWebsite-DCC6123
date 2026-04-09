@@ -1538,3 +1538,92 @@ textarea {
   transform: translateY(-1px);
   box-shadow: var(--shadow);
 }
+
+/* Bug Report Overlay */
+.bug-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.bug-overlay[aria-hidden="true"] {
+  display: none;
+}
+
+.bug-modal {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: var(--shadow);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.bug-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bug-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.bug-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.bug-modal-sub {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.bug-form label {
+  display: block;
+  font-weight: 700;
+  margin: 18px 0 8px;
+}
+
+.bug-form input,
+.bug-form textarea,
+.bug-form select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: white;
+  font: inherit;
+}
+
+.bug-form textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.field-error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.bug-form-actions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

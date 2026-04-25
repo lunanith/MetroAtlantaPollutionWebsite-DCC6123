@@ -169,11 +169,15 @@
     </div>
 
     <div class="chatbot-input-wrap">
-      <input
-        class="chatbot-input"
-        type="text"
-        placeholder="Ask a question..."
-      />
+      <form class="chatbot-form">
+        <input
+          class="chatbot-input"
+          type="text"
+          placeholder="Ask a question..."
+          aria-label="Ask the AI assistant a question"
+        />
+        <button class="chatbot-send" type="submit" aria-label="Send message">Send</button>
+      </form>
     </div>
   </div>
 

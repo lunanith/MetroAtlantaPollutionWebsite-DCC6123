@@ -673,6 +673,38 @@
     </section>
   </main>
 
+  <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open AI Assistant">✦</button>
+
+  <div id="chatbotPanel" class="chatbot-panel">
+    <div class="chatbot-header">
+      <h3>AI Assistant</h3>
+      <button id="chatbotClose" class="chatbot-close" aria-label="Close chat">x</button>
+    </div>
+
+    <div class="chatbot-body">
+      <div class="chat-msg bot">
+        Hi! I'm the MAP-USA AI assistant. I can help explain pollution data, graphs, maps, and lesson content.
+      </div>
+      <div class="chat-msg bot">
+        Try asking something like: "What does PM2.5 mean?" or "Why might pollution be higher near highways?"
+      </div>
+    </div>
+
+    <div class="chatbot-input-wrap">
+      <form class="chatbot-form">
+        <input
+          class="chatbot-input"
+          type="text"
+          placeholder="Ask a question..."
+          aria-label="Ask the AI assistant a question"
+        />
+        <button class="chatbot-send" type="submit" aria-label="Send message">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+
   <script>
     const CHAPTERS = [
       { title: 'Air Pollution Basics' },

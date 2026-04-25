@@ -4,16 +4,90 @@ document.addEventListener("DOMContentLoaded", function () {
   const chatbotToggle = document.getElementById("chatbotToggle");
   const chatbotPanel = document.getElementById("chatbotPanel");
   const chatbotClose = document.getElementById("chatbotClose");
+  const chatbotBody = chatbotPanel ? chatbotPanel.querySelector(".chatbot-body") : null;
+  const chatForm = chatbotPanel ? chatbotPanel.querySelector(".chatbot-form") : null;
+  const chatInput = chatbotPanel ? chatbotPanel.querySelector(".chatbot-input") : null;
+  const chatSendBtn = chatbotPanel ? chatbotPanel.querySelector(".chatbot-send") : null;
+
+  function scrollChatToBottom() {
+    if (chatbotBody) chatbotBody.scrollTop = chatbotBody.scrollHeight;
+  }
+
+  function appendChatMessage(role, text, extraClass) {
+    if (!chatbotBody) return null;
+    const msg = document.createElement("div");
+    msg.className = "chat-msg " + role + (extraClass ? " " + extraClass : "");
+    msg.textContent = text;
+    chatbotBody.appendChild(msg);
+    scrollChatToBottom();
+    return msg;
+  }
+
+  function setChatLoading(isLoading) {
+    if (chatInput) chatInput.disabled = isLoading;
+    if (chatSendBtn) chatSendBtn.disabled = isLoading;
+    if (chatSendBtn) chatSendBtn.textContent = isLoading ? "..." : "Send";
+  }
 
   if (chatbotToggle && chatbotPanel) {
     chatbotToggle.addEventListener("click", function () {
       chatbotPanel.classList.toggle("open");
+      if (chatbotPanel.classList.contains("open")) {
+        scrollChatToBottom();
+        if (chatInput) chatInput.focus();
+      }
     });
   }
 
   if (chatbotClose && chatbotPanel) {
     chatbotClose.addEventListener("click", function () {
       chatbotPanel.classList.remove("open");
+    });
+  }
+
+  if (chatForm && chatInput) {
+    chatForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      if (chatbotPanel && !chatbotPanel.classList.contains("open")) {
+        chatbotPanel.classList.add("open");
+      }
+
+      appendChatMessage("user", message);
+      chatInput.value = "";
+      setChatLoading(true);
+
+      const pendingMessage = appendChatMessage("bot", "Thinking...", "pending");
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "same-origin",
+          body: JSON.stringify({
+            message: message,
+            pageTitle: document.title,
+            pagePath: window.location.pathname,
+          }),
+        });
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || "Something went wrong.");
+        }
+
+        if (pendingMessage) pendingMessage.remove();
+        appendChatMessage("bot", data.reply);
+      } catch (err) {
+        if (pendingMessage) pendingMessage.remove();
+        appendChatMessage("bot", err.message || "The assistant is unavailable right now.");
+      } finally {
+        setChatLoading(false);
+        chatInput.focus();
+      }
     });
   }
 

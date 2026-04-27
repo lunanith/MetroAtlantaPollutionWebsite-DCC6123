@@ -14,6 +14,8 @@ import uuid
 import glob
 import csv
 import secrets
+import base64
+import mimetypes
 from datetime import datetime, timezone
 from urllib import error as urllib_error
 from urllib import request as urllib_request
@@ -54,6 +56,9 @@ and the educational content on the site. Be clear, concise, and friendly.
 If a question goes beyond the site topics, still try to help, but say when you are not certain.
 Do not claim to have live data unless the user explicitly provides it in the conversation.
 Keep answers short and readable for students, educators, and community members.
+Format answers for a small chat window: use plain sentences, short paragraphs, and simple numbered
+or bulleted lists only when useful. Avoid markdown tables, headings, bold markers, citations in
+brackets, decorative symbols, and long blocks of special characters.
 Use the provided sensor dataset context when a user asks about measurements, trends, dates,
 AQI, PM values, temperature, humidity, pressure, gas, or other sensor readings.
 """.strip()
@@ -78,6 +83,24 @@ ALLOWED_IMAGE_EXT = {"png", "jpg", "jpeg", "gif", "webp"}
 MAX_SCREENSHOT_MB = 5
 ALLOWED_SEVERITY  = {"low", "medium", "high", "critical"}
 MAX_SENSOR_CONTEXT_CHARS = 18000
+MAX_CHAT_ATTACHMENT_BYTES = 8 * 1024 * 1024
+MAX_CHAT_ATTACHMENT_TOTAL_BYTES = 16 * 1024 * 1024
+MAX_CHAT_ATTACHMENTS = 3
+MAX_CHAT_TEXT_ATTACHMENT_CHARS = 12000
+CHAT_IMAGE_MIME_TYPES = {"image/png", "image/jpeg", "image/webp", "image/gif"}
+CHAT_PDF_MIME_TYPES = {"application/pdf"}
+CHAT_TEXT_EXTENSIONS = {
+    ".txt",
+    ".md",
+    ".csv",
+    ".json",
+    ".html",
+    ".css",
+    ".js",
+    ".py",
+    ".xml",
+    ".log",
+}
 DEFAULT_SENSOR_COLUMNS = [
     "pm2_5_atm",
     "pm10_0_atm",
@@ -458,7 +481,75 @@ def _extract_response_text(response_payload):
     return ""
 
 
-def _build_chat_input(history, message, page_title="", page_path=""):
+def _guess_upload_mime(filename, uploaded_mime):
+    guessed_mime = mimetypes.guess_type(filename)[0]
+    return (uploaded_mime or guessed_mime or "application/octet-stream").split(";")[0].strip().lower()
+
+
+def _prepare_chat_attachments(uploaded_files):
+    if not uploaded_files:
+        return [], []
+
+    attachments = []
+    errors = []
+    total_size = 0
+    files = [file for file in uploaded_files if file and file.filename]
+
+    if len(files) > MAX_CHAT_ATTACHMENTS:
+        return [], [f"Please upload {MAX_CHAT_ATTACHMENTS} files or fewer at a time."]
+
+    for uploaded_file in files:
+        filename = secure_filename(uploaded_file.filename) or "attachment"
+        file_bytes = uploaded_file.read()
+        file_size = len(file_bytes)
+        total_size += file_size
+        mime_type = _guess_upload_mime(filename, uploaded_file.mimetype)
+        extension = os.path.splitext(filename)[1].lower()
+
+        if file_size == 0:
+            errors.append(f"{filename} is empty.")
+            continue
+        if file_size > MAX_CHAT_ATTACHMENT_BYTES:
+            errors.append(f"{filename} is too large. Each file must be 8 MB or smaller.")
+            continue
+        if total_size > MAX_CHAT_ATTACHMENT_TOTAL_BYTES:
+            errors.append("The selected files are too large together. Please keep uploads under 16 MB total.")
+            continue
+
+        if mime_type in CHAT_IMAGE_MIME_TYPES:
+            encoded_image = base64.b64encode(file_bytes).decode("ascii")
+            attachments.append({
+                "type": "input_image",
+                "image_url": f"data:{mime_type};base64,{encoded_image}",
+                "detail": "auto",
+            })
+            continue
+
+        if mime_type in CHAT_PDF_MIME_TYPES or extension == ".pdf":
+            encoded_file = base64.b64encode(file_bytes).decode("ascii")
+            attachments.append({
+                "type": "input_file",
+                "filename": filename,
+                "file_data": encoded_file,
+            })
+            continue
+
+        if mime_type.startswith("text/") or extension in CHAT_TEXT_EXTENSIONS:
+            text = file_bytes.decode("utf-8", errors="replace").strip()
+            if len(text) > MAX_CHAT_TEXT_ATTACHMENT_CHARS:
+                text = text[:MAX_CHAT_TEXT_ATTACHMENT_CHARS] + "\n[File text truncated.]"
+            attachments.append({
+                "type": "input_text",
+                "text": f"Attached file: {filename}\n\n{text}",
+            })
+            continue
+
+        errors.append(f"{filename} is not supported yet. Please upload an image, PDF, CSV, JSON, or plain text file.")
+
+    return attachments, errors
+
+
+def _build_chat_input(history, message, page_title="", page_path="", attachments=None):
     sensor_context = _build_sensor_dataset_context(message)
     page_context = []
     if page_title:
@@ -482,14 +573,17 @@ def _build_chat_input(history, message, page_title="", page_path=""):
     ]
 
     for item in history:
+        content_type = "output_text" if item["role"] == "assistant" else "input_text"
         response_input.append({
             "role": item["role"],
-            "content": [{"type": "input_text", "text": item["content"]}],
+            "content": [{"type": content_type, "text": item["content"]}],
         })
 
+    user_content = [{"type": "input_text", "text": user_message}]
+    user_content.extend(attachments or [])
     response_input.append({
         "role": "user",
-        "content": [{"type": "input_text", "text": user_message}],
+        "content": user_content,
     })
     return response_input
 
@@ -591,13 +685,26 @@ Message:
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
-    data = request.get_json() or {}
+    if request.content_type and request.content_type.startswith("multipart/form-data"):
+        data = request.form
+        uploaded_files = request.files.getlist("attachments")
+    else:
+        data = request.get_json() or {}
+        uploaded_files = []
+
     message = (data.get("message") or "").strip()
     page_title = (data.get("pageTitle") or "").strip()
     page_path = (data.get("pagePath") or "").strip()
+    attachments, attachment_errors = _prepare_chat_attachments(uploaded_files)
+
+    if attachment_errors:
+        return jsonify({"success": False, "error": " ".join(attachment_errors)}), 400
+
+    if not message and not attachments:
+        return jsonify({"success": False, "error": "Please enter a message or attach a file."}), 400
 
     if not message:
-        return jsonify({"success": False, "error": "Please enter a message."}), 400
+        message = "Please analyze the attached file or image."
 
     if not OPENAI_API_KEY:
         return jsonify({
@@ -606,7 +713,7 @@ def chat():
         }), 500
 
     history = _normalize_chat_history(session.get(CHAT_HISTORY_SESSION_KEY, []))
-    response_input = _build_chat_input(history, message, page_title, page_path)
+    response_input = _build_chat_input(history, message, page_title, page_path, attachments)
 
     try:
         response_payload = _create_openai_response(response_input)
@@ -643,6 +750,12 @@ def chat():
     session[CHAT_HISTORY_SESSION_KEY] = history[-MAX_CHAT_HISTORY_MESSAGES:]
 
     return jsonify({"success": True, "reply": reply}), 200
+
+
+@app.route("/api/chat/reset", methods=["POST"])
+def reset_chat():
+    session.pop(CHAT_HISTORY_SESSION_KEY, None)
+    return jsonify({"success": True}), 200
 
 
 @app.route("/api/report-bug", methods=["POST"])

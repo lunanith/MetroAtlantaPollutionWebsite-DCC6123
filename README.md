@@ -13,7 +13,7 @@
 
 ---
 
-## Release Notes — Version 1.0
+## Release Notes - Version 1.0
 
 *Released: April 28, 2025*
 
@@ -40,10 +40,10 @@ An About Us page presents CSC-ATL's mission and background. A contact form allow
 #### AI-Powered Pollution Analysis Chatbot *(Star Feature)*
 A generative AI chatbot is integrated as a pop-up accessible on every page of the website. The chatbot is trained on South Atlanta pollution datasets and serves as an educational aide for students, teachers, and community members. Key capabilities include:
 
-- **Educational material generation** — accepts a topic, grade level, and formatting preferences to generate pollution-focused educational content for copy or download.
-- **Graph & visualization explanation** — accepts uploaded images of data visualizations (via file upload) and explains the data in the context of South Atlanta pollution.
-- **ArcGIS map assistance** — answers user questions about the map's layers and the data they represent.
-- **Educational module support** — clarifies air pollution concepts covered in the modules, helps users complete interactive activities, and provides hints or solutions for module quizzes.
+- **Educational material generation** - accepts a topic, grade level, and formatting preferences to generate pollution-focused educational content for copy or download.
+- **Graph & visualization explanation** - accepts uploaded images of data visualizations (via file upload) and explains the data in the context of South Atlanta pollution.
+- **ArcGIS map assistance** - answers user questions about the map's layers and the data they represent.
+- **Educational module support** - clarifies air pollution concepts covered in the modules, helps users complete interactive activities, and provides hints or solutions for module quizzes.
 
 ---
 
@@ -59,8 +59,8 @@ The following bugs were identified and resolved during development:
 ### Known Bugs & Defects
 
 There are no known bugs, but we do have some features that could be improved upon in the future or "defects":
-- **Chatbot response latency** — On first load, the chatbot may take several seconds to respond while the AI model initializes. Subsequent responses are faster.
-- **Module quiz score saving** — Quiz scores are not currently persisted between sessions (not stored in cache). Users who close or refresh the page will lose their progress.
-- **Bug report admin panel notifications** — Real-time push notifications to admins for new bug submissions are not yet implemented; admins must manually check the admin panel.
+- **Chatbot response latency** - On first load, the chatbot may take several seconds to respond while the AI model initializes. Subsequent responses are faster.
+- **Module quiz score saving** - Quiz scores are not currently persisted between sessions (not stored in cache). Users who close or refresh the page will lose their progress.
+- **Bug report admin panel notifications** - Real-time push notifications to admins for new bug submissions are not yet implemented; admins must manually check the admin panel.
 
 *All promised functionality is included in the release*

@@ -130,7 +130,7 @@ OPENAI_MODEL=gpt-5.4-mini
 
 No additional installation steps are required beyond the dependency setup above. All static frontend files (HTML, CSS, JavaScript) are served directly by Flask from the `public/` and `docs/` directories. No build tools, bundlers, or compilers are needed.
 
-Ensure the following directory structure is intact after cloning:
+Ensure your directory structure is intact and looks similar to the following after cloning:
 
 ```
 MetroAtlantaPollutionWebsite-DCC6123/
@@ -166,7 +166,7 @@ Open your browser and navigate to:
 http://127.0.0.1:5000
 ```
 
-The homepage should load with the navigation bar and CSC-ATL content visible.
+The homepage should load with the navigation bar and MAP-USA content visible.
 
 > **Note:** The ArcGIS map, chatbot, and contact form all require an active internet connection and valid API keys to function correctly.
 

@@ -1797,7 +1797,6 @@ textarea {
   box-shadow: var(--shadow);
 }
 
-/* Bug Report Overlay */
 .bug-overlay {
   position: fixed;
   top: 0;
@@ -1886,7 +1885,6 @@ textarea {
   gap: 10px;
 }
 
-/* Admin Toolbar */
 .admin-toolbar {
   display: flex;
   align-items: center;
@@ -1908,7 +1906,6 @@ textarea {
   font: inherit;
 }
 
-/* Report Actions */
 .report-actions {
   display: flex;
   align-items: center;

@@ -45,7 +45,6 @@ RECIPIENT_EMAIL = os.getenv("RECIPIENT_EMAIL")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
 
-# Admin password — set ADMIN_PASSWORD in .env. The default is for local dev only.
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "changeme")
 CHAT_HISTORY_SESSION_KEY = "chat_history"
 MAX_CHAT_HISTORY_MESSAGES = 10
@@ -73,7 +72,6 @@ def admin_required(f):
         return f(*args, **kwargs)
     return wrapper
 
-# --- Bug report storage configuration ---
 BASE_DIR          = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR          = os.path.join(BASE_DIR, "data")
 BUG_REPORTS_FILE  = os.path.join(DATA_DIR, "bug_reports.json")
@@ -805,7 +803,6 @@ def report_bug():
         _save_bug_reports(reports)
 
 
-    # Best-effort admin email notification (won't fail the request if email is down)
     if SENDER_EMAIL and SENDER_PASSWORD and RECIPIENT_EMAIL:
         try:
             msg = MIMEMultipart("alternative")
@@ -866,7 +863,6 @@ def update_bug_report(report_id):
         try:
             doc_ref = db.collection('bug_reports').document(report_id)
             doc_ref.update({"status": new_status})
-            # Get the updated document
             updated_doc = doc_ref.get()
             if updated_doc.exists:
                 return jsonify({"success": True, "report": updated_doc.to_dict()}), 200
@@ -919,7 +915,6 @@ def delete_bug_report(report_id):
 def admin_login():
     data = request.get_json() or {}
     password = data.get("password") or ""
-    # Constant-time comparison to avoid timing attacks
     if hmac.compare_digest(password, ADMIN_PASSWORD):
         session["is_admin"] = True
         session.permanent = False

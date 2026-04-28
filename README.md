@@ -16,6 +16,7 @@
 ## Release Notes — Version 1.0
 
 *Released: April 28, 2025*
+
 *Team Members: Riya Upadhyaya, Nithya Ravula, Amber Verma, Aditi Umapathy, Naperia Wilson*
 
 ---
@@ -61,3 +62,5 @@ There are no known bugs, but we do have some features that could be improved upo
 - **Chatbot response latency** — On first load, the chatbot may take several seconds to respond while the AI model initializes. Subsequent responses are faster.
 - **Module quiz score saving** — Quiz scores are not currently persisted between sessions (not stored in cache). Users who close or refresh the page will lose their progress.
 - **Bug report admin panel notifications** — Real-time push notifications to admins for new bug submissions are not yet implemented; admins must manually check the admin panel.
+
+*All promised functionality is included in the release*

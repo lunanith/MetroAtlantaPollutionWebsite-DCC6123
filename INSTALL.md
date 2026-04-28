@@ -110,7 +110,7 @@ SENDER_PASSWORD=your_gmail_app_password
 RECIPIENT_EMAIL=info@csc-atl.org
 FIREBASE_CREDENTIALS_PATH=/path/to/your/firebase-credentials.json
 OPENAI_API_KEY=your_openai_api_key
-OPENAI_MODEL=gpt-4o-mini
+OPENAI_MODEL=gpt-5.4-mini
 ```
 
 **Notes on each variable:**

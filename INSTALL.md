@@ -21,14 +21,14 @@
 Before beginning, ensure your system meets the following requirements:
 
 **Software:**
-- **Python 3.9 or higher** — [Download Python](https://www.python.org/downloads/)
-- **pip** (Python package manager, included with Python 3.9+) — [pip documentation](https://pip.pypa.io/en/stable/installation/)
-- **Git** — [Download Git](https://git-scm.com/downloads)
+- **Python 3.9 or higher** - [Download Python](https://www.python.org/downloads/)
+- **pip** (Python package manager, included with Python 3.9+) - [pip documentation](https://pip.pypa.io/en/stable/installation/)
+- **Git** - [Download Git](https://git-scm.com/downloads)
 - A modern web browser (Google Chrome, Firefox, or Edge recommended)
 
 **Accounts / API Access:**
-- A **Firebase** project with Firestore and Firebase Auth enabled — [Get started with Firebase](https://firebase.google.com/docs/web/setup)
-- An **ArcGIS** developer account or ArcGIS API key — [ArcGIS Developers](https://developers.arcgis.com/)
+- A **Firebase** project with Firestore and Firebase Auth enabled - [Get started with Firebase](https://firebase.google.com/docs/web/setup)
+- An **ArcGIS** developer account or ArcGIS API key - [ArcGIS Developers](https://developers.arcgis.com/)
 - An **AI API key** for the chatbot integration (see your team's API provider setup)
 
 **Hardware:**
@@ -42,8 +42,8 @@ Before beginning, ensure your system meets the following requirements:
 
 All Python dependencies are listed in `requirements.txt` at the root of the repository. Key dependencies include:
 
-- **Flask** — web server framework
-- **Firebase Admin SDK** — backend Firebase integration
+- **Flask** - web server framework
+- **Firebase Admin SDK** - backend Firebase integration
 - Any AI API client library used for chatbot integration
 
 To install all dependencies at once, see [Build Instructions](#4-build-instructions) below.
@@ -71,7 +71,7 @@ Alternatively, you can download the repository as a ZIP file directly from GitHu
 
 This project does not require compilation. However, you must install the required Python packages before running the application.
 
-**Step 1 — Create a virtual environment (recommended):**
+**Step 1 - Create a virtual environment (recommended):**
 
 ```bash
 python -m venv venv
@@ -88,13 +88,13 @@ Activate the virtual environment:
   venv\Scripts\activate
   ```
 
-**Step 2 — Install dependencies:**
+**Step 2 - Install dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-**Step 3 — Configure environment variables:**
+**Step 3 - Configure environment variables:**
 
 A `.env.example` file is provided in the root of the repository. Copy it and fill in your own credentials:
 
@@ -115,12 +115,12 @@ OPENAI_MODEL=gpt-5.4-mini
 
 **Notes on each variable:**
 
-- **`SENDER_EMAIL`** — the Gmail address the application uses to send contact form and bug report submissions. Must use an App Password rather than a regular Gmail password (see below). Note: ownership of the original account used from the development team will be transferred to the client at handoff.
-- **`SENDER_PASSWORD`** — a Gmail **App Password** for the sender account, not a regular Gmail password. To generate one: go to your Google Account → Security → 2-Step Verification → App Passwords. [Guide here](https://support.google.com/accounts/answer/185833).
-- **`RECIPIENT_EMAIL`** — the CSC-ATL inbox that receives all contact form submissions. This value is fixed and should remain `info@csc-atl.org`.
-- **`FIREBASE_CREDENTIALS_PATH`** — the local file path to your Firebase service account JSON file. To obtain this file: go to the [Firebase Console](https://console.firebase.google.com/) → select the project → Project Settings → Service Accounts → **Generate New Private Key**. Save the downloaded JSON file somewhere on your machine and set this variable to that file's full path (e.g., `C:\Users\yourname\Documents\firebase-credentials.json` on Windows or `/home/yourname/firebase-credentials.json` on Mac/Linux).
-- **`OPENAI_API_KEY`** — your OpenAI API key. Get one at [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
-- **`OPENAI_MODEL`** — the OpenAI model name to use for the chatbot (e.g., `gpt-4o-mini`).
+- **`SENDER_EMAIL`** - the Gmail address the application uses to send contact form and bug report submissions. Must use an App Password rather than a regular Gmail password (see below). Note: ownership of the original account used from the development team will be transferred to the client at handoff.
+- **`SENDER_PASSWORD`** - a Gmail **App Password** for the sender account, not a regular Gmail password. To generate one: go to your Google Account → Security → 2-Step Verification → App Passwords. [Guide here](https://support.google.com/accounts/answer/185833).
+- **`RECIPIENT_EMAIL`** - the CSC-ATL inbox that receives all contact form submissions. This value is fixed and should remain `info@csc-atl.org`.
+- **`FIREBASE_CREDENTIALS_PATH`** - the local file path to your Firebase service account JSON file. To obtain this file: go to the [Firebase Console](https://console.firebase.google.com/) → select the project → Project Settings → Service Accounts → **Generate New Private Key**. Save the downloaded JSON file somewhere on your machine and set this variable to that file's full path (e.g., `C:\Users\yourname\Documents\firebase-credentials.json` on Windows or `/home/yourname/firebase-credentials.json` on Mac/Linux).
+- **`OPENAI_API_KEY`** - your OpenAI API key. Get one at [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
+- **`OPENAI_MODEL`** - the OpenAI model name to use for the chatbot (e.g., `gpt-4o-mini`).
 
 > **Never commit your `.env` file to GitHub.** It is already listed in `.gitignore`.
 

@@ -182,7 +182,7 @@ You likely skipped the dependency install step or your virtual environment is no
 pip install -r requirements.txt
 ```
 
-Make sure your virtual environment is active before running the above command.
+Make sure your virtual environment is active before running the command above.
 
 ---
 
@@ -220,7 +220,3 @@ Ensure you are navigating to `http://127.0.0.1:5000` (not `https://`). Also veri
 
 - Confirm the Flask server is running and no errors appear in the terminal.
 - Check that your Firebase Firestore connection is active and the collection names match what is configured in `app.py`.
-
----
-
-*For questions or support, contact the CSC-ATL team via the Contact page on the website.*

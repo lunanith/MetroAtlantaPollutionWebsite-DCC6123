@@ -122,7 +122,7 @@ OPENAI_MODEL=gpt-5.4-mini
 - **`OPENAI_API_KEY`** — your OpenAI API key. Get one at [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
 - **`OPENAI_MODEL`** — the OpenAI model name to use for the chatbot (e.g., `gpt-4o-mini`).
 
-> ⚠️ **Never commit your `.env` file to GitHub.** It is already listed in `.gitignore`. Only commit `.env.example` with placeholder values.
+> **Never commit your `.env` file to GitHub.** It is already listed in `.gitignore`. Only commit `.env.example` with placeholder values.
 
 ---
 

@@ -196,7 +196,7 @@ Ensure you are navigating to `http://127.0.0.1:5000` (not `https://`). Also veri
 
 - Confirm your `ARCGIS_API_KEY` is set correctly in your `.env` file.
 - Check that your ArcGIS account has an active subscription or developer tier with map tile access.
-- Some corporate or school networks may block ArcGIS tile requests — try on a different network.
+- Some corporate or school networks may block ArcGIS tile requests. In this case, try on a different network.
 
 ---
 
@@ -204,7 +204,7 @@ Ensure you are navigating to `http://127.0.0.1:5000` (not `https://`). Also veri
 
 - Verify your `AI_API_KEY` is set correctly in your `.env` file.
 - Check your API provider dashboard to confirm your key is active and has remaining quota.
-- On first load, the chatbot may take several seconds to initialize — wait a moment before sending a message.
+- On first load, the chatbot may take several seconds to initialize. In this case, wait a moment before sending a message.
 
 ---
 
